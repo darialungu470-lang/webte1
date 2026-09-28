@@ -63,7 +63,7 @@ fetch(weatherUrl)
 
 
 // ========================================
-// 3. Odessa = Poloha + Marker + Pocasie
+// 4. Odessa = Poloha + Marker + Pocasie
 // ========================================
 const weatherOdessa =
     "https://api.open-meteo.com/v1/forecast" +
