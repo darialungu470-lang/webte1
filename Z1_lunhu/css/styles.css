@@ -1,0 +1,215 @@
+/* ------------------------------------------
+             Srifty
+------------------------------------------ */
+
+@font-face {
+    font-family: "Serif";
+    src: url("fonts/DMSerifDisplay-Regular.ttf") format("truetype");
+}
+
+
+
+/* ------------------------------------------
+             Spolocne styly
+------------------------------------------ */
+
+body{
+    font-family: "Serif";
+    background-color: rgb(255, 250, 200);
+    font-size: 16px;
+}
+
+.container{
+    padding: 0;
+    margin: 0 auto;
+
+    width: 1000px;
+
+    background-color: antiquewhite;
+}
+
+.main{
+
+}
+
+a{
+    text-decoration: none;
+    color:black;
+}
+
+p{
+    text-indent: 15px;
+}
+
+/* ------------------------------------------
+                 Hlavicka
+------------------------------------------ */
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px 50px;
+    margin: 0;
+
+
+    background-color: rgb(255, 192, 216);
+
+}
+
+.logo-things{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+    
+
+}
+
+.logo{
+    width: 50px;
+    border-radius: 50%;
+}
+
+.logo-text{
+    font-style: italic;
+}
+
+.slogan{
+    font-size: 26px;
+    font-style: italic;
+    text-shadow: 2px 5px 10px rgb(181, 37, 101);
+
+}
+
+
+/* ------------------------------------------
+                    Obsah
+------------------------------------------ */
+
+/*- Navigacia -*/
+.navigation{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 15px 200px;
+
+    background-color: rgb(255, 226, 237);
+
+
+}
+
+.nav-link{
+    transition: all 0.5s;
+}
+
+.nav-link:hover{
+    font-size: 18px;
+    color: rgb(181, 37, 101);
+
+
+}
+
+.current-page{
+    font-size: 18px;
+    color: rgb(181, 37, 101);
+}
+
+
+/*- Sekcia "Who am I" -*/
+
+.whoami{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 50px;
+
+    margin: 0;
+    padding: 30px 50px;
+
+}
+
+.myfoto{
+    max-width: 250px;
+    width: 100%;
+
+    border-radius: 25%;
+
+}
+
+.whoami-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.title-whoami{
+
+}
+
+.text-whoami{
+
+}
+
+
+/*- Sekcia "Karticky" -*/
+
+.hobbies{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+
+}
+
+.card{
+
+}
+
+.image-card{
+    width: 200px;
+    height: 200px;
+    
+    object-fit: cover;  /* aby obrazok neplyl */
+
+}
+
+.text-card{
+    display: flex;
+    flex-direction: column ;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.title-card{
+
+}
+
+.desc-card{
+
+}
+
+
+
+
+
+/* ------------------------------------------
+                   Stopicka
+------------------------------------------ */
+
