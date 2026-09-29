@@ -29,6 +29,10 @@ body{
 }
 
 .main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 
 }
 
@@ -130,16 +134,27 @@ p{
     gap: 50px;
 
     margin: 0;
-    padding: 30px 50px;
+    padding: 30px 0;
+
+    max-width: 900px;
 
 }
 
 .myfoto{
+    margin-left: 20px;
+
     max-width: 250px;
     width: 100%;
 
-    border-radius: 25%;
+    border:2px solid white;
+    border-radius: 25% 0;
 
+    transition: all 0.3s;
+
+}
+
+.myfoto:hover{
+    max-width: 280px;
 }
 
 .whoami-text{
@@ -147,6 +162,12 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    padding: 30px 50px;
+    margin-right: 20px;
+
+    background-color: aliceblue;
+    opacity: 0.7;
 
 }
 
@@ -166,6 +187,10 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    padding: 20px;
+
+    padding-bottom: 40px;
 }
 
 .cards{
@@ -173,11 +198,27 @@ p{
     justify-content: center;
     align-items: center;
 
-    gap: 30px;
+    gap: 20px;
 
 }
 
 .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+   // padding: 10px 10px;
+
+    background-color: aliceblue;
+    border-radius: 5%;
+    box-shadow: 10px 10px 10px grey;
+
+}
+
+.card:hover .image-card{
+    width: 220px;
+    height: 220px;
 
 }
 
@@ -186,6 +227,10 @@ p{
     height: 200px;
     
     object-fit: cover;  /* aby obrazok neplyl */
+
+    border-radius: 5% 5% 0 0;
+
+    transition: all 0.3s;
 
 }
 
@@ -198,11 +243,90 @@ p{
 }
 
 .title-card{
+    margin-bottom: 0;
 
 }
 
 .desc-card{
+    max-width: 180px;
 
+    text-indent: 0;
+    text-align: center;
+
+}
+
+/*- Sekcia "Moje ciele" -*/
+
+.mytargets{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    width: 860px;
+
+    background-color: aliceblue;
+    border-radius: 10px;
+
+}
+
+.img-target{
+    max-width: 200px;
+    width: 100%;
+
+    margin: 0 50px;
+
+    border: 7px solid black;
+    border-radius: 100px;
+    box-shadow: 0 0 5px rgb(255, 236, 130);
+
+    transition: all 0.3s;
+
+}
+
+.img-target:hover{
+    max-width: 220px;
+    box-shadow: 0 0 70px rgb(255, 236, 130);
+
+}
+
+.conteiner-targets{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    //margin: 30px;
+    width: 450px;
+
+}
+
+.title-targets{
+    font-size: 50px;
+    
+}
+
+.targets{
+
+}
+
+.target{
+    font-size: 20px;
+    line-height: 5;
+
+}
+
+#cooking {
+    list-style-image: url("../icons/books.svg");
+}
+
+#romane{
+    list-style-image: url("../icons/pot.svg");
+}
+
+#programing{
+    list-style-image: url("../icons/javascript.svg");
 }
 
 
