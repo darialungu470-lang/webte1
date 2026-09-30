@@ -15,7 +15,7 @@
 
 body{
     font-family: "Serif";
-    background-color: rgb(255, 250, 200);
+    background-color: rgb(251, 249, 222);
     font-size: 16px;
 }
 
@@ -25,7 +25,7 @@ body{
 
     width: 1000px;
 
-    background-color: antiquewhite;
+    background-color: rgb(255, 250, 200);
 }
 
 .main{
@@ -172,7 +172,7 @@ p{
 }
 
 .title-whoami{
-
+    margin: 16px 0;
 }
 
 .text-whoami{
@@ -329,6 +329,54 @@ p{
     list-style-image: url("../icons/javascript.svg");
 }
 
+/*- Sekcia "Citata" -*/
+
+.quote-aside{
+    margin: 30px 0;
+
+    width: 855px;
+
+    background-color: aliceblue;
+
+    border-left: 5px solid rgb(181, 37, 101);
+
+    opacity: 0.7;
+
+}
+
+.quote-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.text-quote{
+    margin: 0;
+
+    font-size: 26px;
+    color: black;
+    text-indent: 0;
+
+    text-align: center;
+}
+
+.author-quote{
+    text-align: end;
+    font-size: 16px;
+    color: rgba(46, 46, 46, 0.705);
+}
+
+.quotes{
+    font-size: 40px;
+    color:rgb(181, 37, 101);
+
+}
+
+.close-quote{
+    text-align: end;
+
+}
+
 
 
 
@@ -337,3 +385,43 @@ p{
                    Stopicka
 ------------------------------------------ */
 
+.footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px 0;
+
+    background-color: rgb(255, 192, 216);
+
+}
+
+.container-footer{
+
+    width:860px;
+}
+
+.details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    text-align: center;
+
+}
+
+.email-footer:hover{
+    color: rgb(181, 37, 101);
+    
+}
+
+.phone-footer:hover{
+    color: rgb(181, 37, 101);
+
+}
+
+.year-footer{
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+}
