@@ -45,14 +45,22 @@ p{
     text-indent: 15px;
 }
 
+.flexbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* ------------------------------------------
                  Hlavicka
 ------------------------------------------ */
 
 .header{
-    display: flex;
+   /* display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center;*/
+
+    justify-content: space-between;
 
     padding: 5px 50px;
     margin: 0;
@@ -63,14 +71,8 @@ p{
 }
 
 .logo-things{
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     gap: 20px;
     
-
 }
 
 .logo{
@@ -95,9 +97,11 @@ p{
 ------------------------------------------ */
 
 .navigation{
-    display: flex;
+   /* display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: center;  */
+
+    justify-content: space-around;
 
     padding: 15px 200px;
 
@@ -130,9 +134,9 @@ p{
 /*- Sekcia "Who am I" -*/
 
 .whoami{
-    display: flex;
+   /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 
     gap: 50px;
 
@@ -161,10 +165,12 @@ p{
 }
 
 .whoami-text{
-    display: flex;
+   /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;   */
+
+    flex-direction: column;
 
     padding: 30px 50px;
     margin-right: 20px;
@@ -186,10 +192,12 @@ p{
 /*- Sekcia "Karticky" -*/
 
 .hobbies{
-    display: flex;
+   /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;    */
+
+    flex-direction: column;
 
     padding: 20px;
 
@@ -197,21 +205,21 @@ p{
 }
 
 .cards{
-    display: flex;
+   /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;  */
 
     gap: 20px;
 
 }
 
 .card{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 
-   // padding: 10px 10px;
+    flex-direction: column;
 
     background-color: aliceblue;
     border-radius: 5%;
@@ -238,10 +246,12 @@ p{
 }
 
 .text-card{
-    display: flex;
+    /* display: flex;
     flex-direction: column ;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+
+    flex-direction: column ;
 
 }
 
@@ -261,9 +271,9 @@ p{
 /*- Sekcia "Moje ciele" -*/
 
 .mytargets{
-    display: flex;
+    /*display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;   */
 
     gap: 20px;
 
@@ -295,12 +305,13 @@ p{
 }
 
 .conteiner-targets{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 
-    //margin: 30px;
+    flex-direction: column;
+
     width: 450px;
 
 }
@@ -392,17 +403,31 @@ p{
     display: grid;
     grid-template-columns: 1fr 2fr;
 
-    gap: 30px;
+    gap: 10px;
 }
 
 .contacts{
-    
+    flex-direction: column;
+
+    padding: 0 10px;
+    background-color: rgb(255, 239, 245);;
 }
 
 .foto-cv{
     max-width: 250px;
     width: 100%;
 
+    margin: 20px 0;
+
+    border:2px solid white;
+    border-radius: 25% 0;
+
+    transition: all 0.3s;
+
+}
+
+.foto-cv:hover{
+    max-width: 280px;
 }
 
 .container-cv .details{
@@ -414,13 +439,141 @@ p{
 
 .container-cv .details div{
     display: flex;
+
+    margin-bottom: 10px;
 }
 
 .container-cv .details p{
     text-indent: 0;
+    padding-right: 15px;
     margin: 0;
 }
 
+/*- Sekcia "Zivotopis" -*/
+
+.contents-cv{
+    padding: 20px 10px;
+    background-color: rgb(255, 239, 245);
+}
+
+.base-info-cv{
+    flex-direction: column;
+}
+
+.title-cv{
+    padding: 0 5px 5px 10px;
+    margin: 0;
+    border-bottom: 1px solid black;
+}
+
+.note{
+    padding-top: 10px;
+
+    font-style: italic;
+
+}
+
+.cards-cv{
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+
+    margin: 20px 0;
+
+    gap: 20px;
+
+}
+
+.card-cv{
+    flex-direction: column;
+
+    border: 2px solid rgb(181, 37, 101);
+    background-color: white;
+    border-radius: 10px;
+}
+
+.title-table-cv{
+    padding-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*- tabulka "O mne" a  "Vzdelavanie"-*/
+
+.table-cv{
+    padding: 10px;
+    width: 100%;
+
+}
+
+.th-cv{
+    width: 25%;
+    text-align: start;
+    vertical-align: text-top;
+}
+
+
+/*- Sekcia "Zrucnosti" -*/
+.skills{
+    padding: 10px 80px;
+}
+
+.title-skills{
+    margin: 0;
+    font-size: 20px;
+}
+
+.skill-levels{
+    gap: 100px;
+
+}
+
+.level{
+    padding-left: 10px;
+    
+}
+
+#junior{ 
+    list-style-type: "\1F7E2";
+}
+
+#middle{
+    list-style-type: "\1F7E1";
+}
+
+#senior{
+    list-style-type: "\1F7E3";
+}
+
+.wrap-skills{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    width:100%;
+}
+
+.skill::details-content{
+    opacity:0;
+    transition: opacity 600ms, content-visibility 600ms allow-discrete; 
+
+}
+
+.skill[open].skill::details-content{
+    opacity: 1;
+}
+
+.title-skill::marker{
+    color:rgb(255, 192, 216);
+}
+
+.list-skill{
+
+}
+
+.item-skill{
+
+}
 
 
 
@@ -429,9 +582,9 @@ p{
 ------------------------------------------ */
 
 .footer{
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 
     padding: 20px 0;
 
