@@ -1,5 +1,9 @@
 @media print{
-    nav {
-        direction: none !important;
+    .navigation, .header, .footer{
+        display: none !important;
+    }
+
+    .card-cv{
+        border: nonE;
     }
 }
