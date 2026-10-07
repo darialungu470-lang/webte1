@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moje pracovné prostredie</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main>
+    <h1>Moje pracovné prostredie</h1>
+
+    <figure class="hotspot-image">
+      <img src="img/myfoto.jpg" alt="Moje pracovné prostredie" width="600" height="800">
+
+
+      <!-- Záložný obsah – zobrazí sa, ak je JavaScript vypnutý --> 
+       <noscript>
+      <div class="hotspots-fallback">
+
+      <div class="hotspot" style="--x: 37%; --y: 35%">
+        <button class="hotspot__dot" type="button" aria-label="Počítač"></button>
+        <div class="hotspot__panel">
+          <h2>Počítač</h2>
+          <p>Pracovná vec.</p>
+        </div>
+      </div>
+
+      <div class="hotspot" style="--x: 25%; --y: 65%">
+        <button class="hotspot__dot" type="button" aria-label="Kavička"></button>
+        <div class="hotspot__panel">
+          <h2>Kavička</h2>
+          <p>Krov, ktore tecie v každom študente</p>
+        </div>
+      </div>
+
+      <div class="hotspot" style="--x: 80%; --y: 80%">
+        <button class="hotspot__dot" type="button" aria-label="Knihy"></button>
+        <div class="hotspot__panel">
+          <h2>Knihy</h2>
+          <p>Realná fantastika</p>
+        </div>
+      </div>
+
+      </div>
+      </noscript>
+
+      <!-- Sem JavaScript vloží nové hotspoty --> 
+      <div id="hotspots"></div>
+
+    </figure>
+
+    <p>Text pod obrázkom, aby bolo vidieť, čo sa deje s obsahom pod ním.</p>
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

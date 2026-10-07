@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja pracovna plocha</title>
+    <title>Moje pracovné prostredie</title>
 
     <link rel="stylesheet" href="../css/styles.css">
 </head>
@@ -21,13 +21,80 @@
         <nav class="navigation flexbox">
             <a class="nav-link" href="../index.html">O mne</a>
             <a class="nav-link" href="cv.html">Môj príbeh</a>
-            <a class="current-page" href="workspace.html">Môj setup</a>
+            <a class="current-page" href="workspace.html">Moje pracovisko</a>
             <a class="nav-link" href="schedule.html">Môj čas</a>
             <a class="nav-link" href="map.html">Nájdete ma</a>
         </nav>
 
-        <main class="main">
+        <main class="main workspace-main">
+            <div class="workplace">
+                <h1 class="workspace-title">Moje pracovné prostredie</h1>
+                <h2 class="workspace-subtitle">Miesto, kde študujem, programujem a tvorím</h2>
 
+                <figure class="hotspot-image">
+                    <img src="../img/workplace.jpg" alt="Moje pracovné prostredie" width="600" height="800">
+
+
+                    <!-- Záložný obsah – zobrazí sa, ak je JavaScript vypnutý --> 
+                    <noscript>
+                        <div class="hotspots-fallback">
+
+                            <div class="hotspot" style="--x: 38%; --y: 37%">
+                                <button class="hotspot__dot" type="button" aria-label="laptop"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Počítač</h2>
+                                    <p>Bez neho by som bola študentka informatiky asi len na papieri.</p>
+                                </div>
+                            </div>
+
+                            <div class="hotspot" style="--x: 26%; --y: 67%">
+                                <button class="hotspot__dot" type="button" aria-label="coffee"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Kavička</h2>
+                                    <p>Palivo, bez ktorého moje študentské rána odmietajú spolupracovať.</p>
+                                </div>
+                            </div>
+
+                            <div class="hotspot" style="--x: 80%; --y: 80%">
+                                <button class="hotspot__dot" type="button" aria-label="books"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Knihy</h2>
+                                    <p>Keď už neviem, čo ďalej, otvorím knihu a tvárim sa, že mám plán.</p>
+                                </div>
+                            </div>
+
+                            <div class="hotspot" style="--x: 15%; --y: 59%">
+                                <button class="hotspot__dot" type="button" aria-label="sweet"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Cukrík</h2>
+                                    <p>Malá sladká odmena za veľké množstvo učenia.</p>
+                                </div>
+                            </div>
+
+                            <div class="hotspot" style="--x: 62%; --y: 58%">
+                                <button class="hotspot__dot" type="button" aria-label="valerian"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Valerian</h2>
+                                    <p>Užívať podľa potreby, najmä počas skúškového. Predávkovanie nehrozí.</p>
+                                </div>
+                            </div>
+
+                            <div class="hotspot" style="--x: 80%; --y: 52%">
+                                <button class="hotspot__dot" type="button" aria-label="toy"></button>
+                                <div class="hotspot__panel">
+                                    <h2>Mäkká hračka</h2>
+                                    <p>Realná fantastika</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </noscript>
+
+                    <!-- Sem JavaScript vloží nové hotspoty --> 
+                    <div id="hotspots"></div>
+
+                </figure>
+            </div>
         </main>
     </div>
 
@@ -41,6 +108,8 @@
             <h2 class="year-footer">@2026</h2>
         </div>
     </footer>
+
+    <script src="../js/script.js"></script>
     
 </body>
 </html>
