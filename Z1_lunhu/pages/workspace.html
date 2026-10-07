@@ -18,12 +18,18 @@
     </header>
 
     <div class="container">
-        <nav class="navigation flexbox">
-            <a class="nav-link" href="../index.html">O mne</a>
-            <a class="nav-link" href="cv.html">Môj príbeh</a>
-            <a class="current-page" href="workspace.html">Moje pracovisko</a>
-            <a class="nav-link" href="schedule.html">Môj čas</a>
-            <a class="nav-link" href="map.html">Nájdete ma</a>
+        <nav class="navigation">
+            <button class="menu-button" type="button" aria-label="Otvoriť menu">
+                ☰
+            </button>
+
+            <div class="nav-links flexbox">
+                <a class="nav-link" href="../index.html">O mne</a>
+                <a class="nav-link" href="cv.html">Môj príbeh</a>
+                <a class="current-page" href="workspace.html">Moje pracovisko</a>
+                <a class="nav-link" href="schedule.html">Môj čas</a>
+                <a class="nav-link" href="map.html">Nájdete ma</a>
+            </div>
         </nav>
 
         <main class="main workspace-main">
@@ -49,7 +55,7 @@
 
                             <div class="hotspot" style="--x: 26%; --y: 67%">
                                 <button class="hotspot__dot" type="button" aria-label="coffee"></button>
-                                <div class="hotspot__panel">
+                                <div class="hotspot__panel flexbox">
                                     <h2>Kavička</h2>
                                     <p>Palivo, bez ktorého moje študentské rána odmietajú spolupracovať.</p>
                                 </div>
@@ -73,7 +79,7 @@
 
                             <div class="hotspot" style="--x: 62%; --y: 58%">
                                 <button class="hotspot__dot" type="button" aria-label="valerian"></button>
-                                <div class="hotspot__panel">
+                                <div class="hotspot__panel flexbox">
                                     <h2>Valerian</h2>
                                     <p>Užívať podľa potreby, najmä počas skúškového. Predávkovanie nehrozí.</p>
                                 </div>
@@ -83,7 +89,7 @@
                                 <button class="hotspot__dot" type="button" aria-label="toy"></button>
                                 <div class="hotspot__panel">
                                     <h2>Mäkká hračka</h2>
-                                    <p>Realná fantastika</p>
+                                    <p>Môj chlpatý študijný parťák, ktorý nič nenaprogramuje, ale vždy je pri tom.</p>
                                 </div>
                             </div>
 
@@ -94,6 +100,10 @@
                     <div id="hotspots"></div>
 
                 </figure>
+
+                <p class="hotspot__description">
+                    Prejdi kurzorom nad jednotlivé body a objav, čo sa skrýva na mojom pracovnom stole.
+                </p>
             </div>
         </main>
     </div>
@@ -102,7 +112,6 @@
         <div class="container-footer">
             <address class="details">
                 <a href="mailto:darialungu470@gmail.com" class="email-footer">darialungu470@gmail.com</a>
-                <br>
                 <a href="tel:+421952206607" class="phone-footer">+421952206607</a>
             </address>
             <h2 class="year-footer">@2026</h2>
