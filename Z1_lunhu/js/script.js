@@ -54,6 +54,8 @@ const HOTSPOTS = [
 function createHotspots() {
     const container = document.querySelector("#hotspots");
 
+    if (!container) { return; }
+
     HOTSPOTS.forEach(hotspot => {
         const element = document.createElement("div");
 
@@ -93,3 +95,18 @@ const navLinks = document.querySelector(".nav-links");
 menuButton.addEventListener("click", () => {
     navLinks.classList.toggle("active");
 });
+
+
+/* ------------------------------------------
+             TIME AND DATE
+------------------------------------------ */
+
+function updateCurrentTime() {
+    const now = new Date();
+
+    document.getElementById('current-time').innerHTML = now.toLocaleTimeString();
+    document.getElementById('current-date').innerHTML = now.toLocaleDateString();
+}
+
+updateCurrentTime();
+setInterval(updateCurrentTime, 1000);

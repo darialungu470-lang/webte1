@@ -34,7 +34,107 @@
         </nav>
 
         <main class="main">
-        
+            <div class="title-schedule">
+                <h1>Môj čas</h1>
+                <h2>Čas je vzácny, preto ho využívam efektívne.</h2>
+            </div>
+
+            <div class="time-box flexbox">
+                <span class="time-value" id="current-time"></span>
+                <span class="date-value" id="current-date"></span>  
+            </div>
+
+            <div class="schedule flexbox">
+                <div class="buttons-schedule flexbox">
+                    <button class="btn-schedule">Všetko</button>
+                    <button class="btn-schedule">Prednášky</button>
+                    <button class="btn-schedule">Cvičenia</button>
+                </div>
+
+                <table class="table-schedule">
+                    <caption class="caption-schedule">Rozvrh hodín</caption>
+                    <thead>
+                        <tr>
+                            <th class="corner-cell">
+                                <span class="corner-time">Čas</span>
+                                <span class="corner-day">Deň</span>
+                            </th>
+                            <th>7.00</th>
+                            <th>8.00</th>
+                            <th>9.00</th>
+                            <th>10.00</th>
+                            <th>11.00</th>
+                            <th>12.00</th>
+                            <th>13.00</th>
+                            <th>14.00</th>
+                            <th>15.00</th>
+                            <th>16.00</th>
+                            <th>17.00</th>
+                            <th>18.00</th>
+                            <th>19.00</th>
+                            <th>20.00</th>
+                            <th>21.00</th>
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        <th>Pon</th>
+                        <td colspan="2"></td>
+                        <td colspan="2" id="sport-class"><span>Pilates</span></td>
+                        <td colspan="2" id="required-class"><span>WEBTE</span></td>
+                        <td colspan="2" id="required-class"><span>OS</span></td>
+                        <td colspan="7"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Uto</th>
+                        <td colspan="1"></td>
+                        <td colspan="2" id="dispensable-class"><span>AZA</span></td>
+                        <td colspan="2" id="dispensable-class"><span>WEBTE</span></td>
+                        <td colspan="10"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Str</th>
+                        <td colspan="1"></td>
+                        <td colspan="2" id="dispensable-class"><span>OS</span></td>
+                        <td colspan="2" id="dispensable-class"><span>AZA</span></td>
+                        <td colspan="1"></td>
+                        <td colspan="2" id="dispensable-class"><span>WEBTE</span></td>
+                        <td colspan="7"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Štv</th>
+                        <td colspan="6"></td>
+                        <td colspan="2" id="sport-class"><span>Tance</span></td>
+                        <td colspan="7"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Pia</th>
+                        <td colspan="1"></td>
+                        <td colspan="1" id="required-class"><span>AZA</span></td>
+                        <td colspan="13"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Sob</th>
+                        <td colspan="15"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Ned</th>
+                        <td colspan="15"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="progress-bar">
+                <h3>Title</h3>
+                Progress bar
+            </div>
         </main>
     </div>
 
@@ -49,6 +149,8 @@
             <h2 class="year-footer">@2026</h2>
         </div>
     </footer>
+
+    <script src="../js/script.js"></script>
 
 </body>
 </html>

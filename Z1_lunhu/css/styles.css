@@ -33,7 +33,6 @@ body{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
 }
 
 a{
@@ -917,3 +916,181 @@ p{
 }
 
 
+
+/* ------------------------------------------
+                   "schedule.html"
+------------------------------------------ */
+
+.title-schedule{
+    text-align: center;
+}
+
+.title-schedule h1{
+    margin: 0;
+    padding: 0.5rem 0;
+    color: rgb(118, 24, 66);
+    font-size: 30px;
+}
+
+.title-schedule h2{
+    margin-top: 0;
+    color: rgb(104, 76, 88);
+    font-size: 16px;
+}
+
+.time-box{
+    flex-direction: column;
+
+    margin: 0.5rem auto;
+    padding: 1.5rem 2.5rem;
+
+    background-color: rgb(255, 254, 239);
+    border-radius: 15px;
+    box-shadow: 0 0 1rem rgb(255, 192, 216);
+    opacity: 0.7;
+
+}
+
+#current-time{
+    font-size: 26px;
+
+}
+
+#current-date{
+    font-size: 18px;
+    color: rgb(181, 37, 101);;
+
+}
+
+.schedule{
+    flex-direction: column;
+    
+}
+
+.buttons-schedule{
+    margin: 1rem 0;
+    gap: 3rem;
+}
+
+.btn-schedule{
+    width: 120px;
+    height: 40px;
+
+    font-family: "Serif";
+    font-size: 16px;
+
+    background-color: rgb(255, 226, 237);
+    border: none;
+    border-radius: 10px;
+    color: rgb(118, 24, 66);
+
+    transition: all 0.3s;
+    
+
+}
+
+.btn-schedule:hover{
+    width: 135px;
+    font-size: 20px;
+
+    border: 2px dotted rgb(118, 24, 66);
+}
+
+.table-schedule{
+    width: 900px;
+    background-color: rgb(255, 236, 243);
+    border: 2px solid rgb(181, 37, 101);
+    border-collapse: collapse;
+
+    text-align: center;
+
+}
+
+.caption-schedule{
+    padding: 5px 0;
+
+    font-family: 'Serif';
+    color: rgb(255, 236, 243);
+    background-color: rgb(181, 37, 101);
+    border-radius: 10px 10px 0 0;
+
+}
+
+.table-schedule tr{
+    height: 3rem;
+}
+
+.table-schedule tr:nth-of-type(even){
+    background-color: rgb(255, 226, 237);
+}
+
+.table-schedule th{
+    border: 1px solid rgb(181, 37, 101);
+    background-color: rgb(255, 192, 216); 
+}
+
+/* #dispensable-class{
+    background-color: rgb(255, 246, 150); 
+    border: 1px solid rgb(255, 225, 150);
+    border-radius: 25%;
+
+} */
+
+#dispensable-class span,
+#required-class span,
+#sport-class span{
+    display: block;
+    padding: 0.7rem;
+    border-radius: 12px;
+
+}
+
+#dispensable-class,
+#required-class,
+#sport-class {
+    background-color: transparent;
+    border: none;
+}
+
+#dispensable-class span {
+    background-color: rgb(255, 246, 150);
+    border: 1px solid rgb(255, 225, 150);
+}
+
+#required-class span {
+    background-color: rgb(255, 250, 200);
+    border: 1px dashed rgb(255, 225, 150);
+}
+
+#sport-class span {
+    background-color: rgb(254, 186, 240);
+    border: 1px dotted rgb(146, 29, 136);
+}
+
+.table-schedule th{
+    width: 54px;
+}
+
+.corner-cell {
+    position: relative;
+    width: 90px;
+    min-width: 90px;
+    background: linear-gradient(
+        to top right,
+        transparent 49.5%,
+        rgb(181, 37, 101) 50%,
+        transparent 50.5%
+    );
+}
+
+.corner-time {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.corner-day {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+}
