@@ -6,6 +6,12 @@
     <title>Moja poloha</title>
 
     <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 </head>
 <body>
     
@@ -35,6 +41,41 @@
 
         <main class="main">
 
+            <div class = "title-map flexbox">
+                <h1 class="title">Miesta, ktoré navštevujem</h1>
+                <h2 class="subtitle">Moja škola a miesto, kde bývam</h2>
+            </div>
+
+            <div class="rules-map flexbox">
+                <p>Na mape nájdeš dve dôležité miesta v mojom každodennom živote.</p>
+                <p>Kliknutím na značku zobrazíš názov daného miesta.</p>
+            </div>
+
+            <section class="map-place">
+                <h3>Moja mapa</h3>
+
+                <p class="map-instruction"> Kliknutím na mapu môžeš pridať nové miesto. </p>
+
+                <div id="map"></div>
+
+                <div class="map-add-point"> 
+                    <label for="new-point-name">Názov nového miesta</label> 
+                    <input type="text" id="new-point-name" placeholder="Napr. Obľúbená kaviareň" > 
+                    <button type="button" id="add-point-button"> 
+                        Pridať miesto 
+                    </button> 
+                    <p id="map-message" role="status"></p> 
+                </div>
+
+                <div class="map-points"> 
+                    <label for="map-points-list">Moje miesta</label> 
+                    <select id="map-points-list"> 
+                        <option value="">Vyber miesto zo zoznamu</option> 
+                    </select> 
+                </div>
+            </section>
+            
+
         </main>
     </div>
 
@@ -49,6 +90,12 @@
             <h2 class="year-footer">@2026</h2>
         </div>
     </footer>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Vlastný JavaScript -->
+    <script src="../js/script.js"></script>
 
 </body>
 </html>

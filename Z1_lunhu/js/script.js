@@ -109,14 +109,32 @@ menuButton.addEventListener("click", () => {
              TIME AND DATE
 ------------------------------------------ */
 
-function updateCurrentTime() {
-    const now = new Date();
+// function updateCurrentTime() {
+//     const now = new Date();
 
-    document.getElementById('current-time').innerHTML = now.toLocaleTimeString();
-    document.getElementById('current-date').innerHTML = now.toLocaleDateString();
-}
+//     document.getElementById('current-time').innerHTML = now.toLocaleTimeString();
+//     document.getElementById('current-date').innerHTML = now.toLocaleDateString();
+// }
 
-updateCurrentTime();
+// updateCurrentTime();
+// setInterval(updateCurrentTime, 1000);
+
+function updateCurrentTime() { 
+    const timeElement = document.getElementById("current-time"); 
+    const dateElement = document.getElementById("current-date"); 
+    
+    // Ak stránka nemá hodiny a dátum, nič neurobíme. 
+    if (!timeElement || !dateElement) { 
+        return; 
+    } 
+    
+    const now = new Date(); 
+    
+    timeElement.textContent = now.toLocaleTimeString("sk-SK"); 
+    dateElement.textContent = now.toLocaleDateString("sk-SK"); 
+} 
+
+updateCurrentTime(); 
 setInterval(updateCurrentTime, 1000);
 
 
@@ -289,8 +307,21 @@ function updateSemesterProgress() {
     const startDateText = document.getElementById("semester-start-date");
     const endDateText = document.getElementById("semester-end-date");
 
+
+    // Ak stránka neobsahuje prvky rozvrhu a semestra,
+    // funkciu ukončíme.
+    if (
+        !schedule || !progress || !message ||
+        !percentage || !fill || !bar ||
+        !startDateText || !endDateText
+    ) {
+        return;
+    }
+
+
     startDateText.textContent = start.toLocaleDateString("sk-SK");
     endDateText.textContent = end.toLocaleDateString("sk-SK");
+
 
     // Kontrola, či sú dátumy správne.
     if (start >= end) {
@@ -343,3 +374,142 @@ function updateSemesterProgress() {
 }
 
 updateSemesterProgress();
+
+
+/* ------------------------------------------
+                    Mapa
+------------------------------------------ */
+
+const mapElement = document.getElementById("map");
+
+if (mapElement) { 
+    const map = L.map("map").setView( 
+        [48.151965, 17.072995], 
+        14 
+    );
+
+    L.tileLayer( 
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
+        { 
+            maxZoom: 19, 
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' 
+        } 
+    ).addTo(map);
+
+    const pointsList = document.getElementById("map-points-list");
+
+    // Všetky vytvorené body uchovávame v poli. 
+    const points = [];
+
+    // Funkcia na pridanie bodu do mapy aj zoznamu. 
+    function addPoint(name, lat, lng) { 
+        const marker = L.marker([lat, lng]).addTo(map); 
+        
+        marker.bindPopup(`<strong>${name}</strong>`);
+
+        const point = { 
+            name: name, 
+            lat: lat, 
+            lng: lng, 
+            marker: marker 
+        };
+
+        points.push(point);
+
+        // Vytvoríme položku v zozname. 
+        const option = document.createElement("option"); 
+        option.value = points.length - 1; 
+        option.textContent = name; 
+        
+        pointsList.appendChild(option); 
+    }
+
+    // Pôvodné pevné body. 
+    addPoint("FEI STU – moja škola", 48.151965, 17.072995); 
+    addPoint("Moje bydlisko", 48.1455, 17.1050);
+
+    // Prvky na pridávanie nového miesta. 
+    const pointNameInput = document.getElementById("new-point-name"); 
+    const addPointButton = document.getElementById("add-point-button"); 
+    const mapMessage = document.getElementById("map-message");
+
+    // Súradnice miesta, na ktoré používateľ klikol. 
+    let newPointLocation = null;
+
+    // Kliknutie na mapu vyberie polohu nového miesta. 
+    map.on("click", function (event) { 
+        newPointLocation = event.latlng;
+
+        mapMessage.textContent = "Poloha je vybraná. Zadaj názov miesta a klikni na Pridať miesto."; 
+        
+        pointNameInput.focus(); 
+    });
+
+    // Pridanie miesta po kliknutí na tlačidlo. 
+    addPointButton.addEventListener("click", function () { 
+        const name = pointNameInput.value.trim();
+
+        if (newPointLocation === null) { 
+            mapMessage.textContent = "Najprv klikni na miesto na mape."; 
+            return; 
+        }
+
+        if (name === "") { 
+            mapMessage.textContent = "Zadaj názov miesta."; 
+            return; 
+        }
+
+        addPoint( name, newPointLocation.lat, newPointLocation.lng );
+
+        mapMessage.textContent = "Miesto bolo pridané."; 
+        pointNameInput.value = ""; 
+        newPointLocation = null; 
+    });
+
+
+    // Výber bodu zo zoznamu. 
+    pointsList.addEventListener("change", function () { 
+        const index = Number(this.value);
+
+        if (this.value === "" || !points[index]) { 
+            return; 
+        }
+
+        const point = points[index];
+
+        map.setView( 
+            [point.lat, point.lng], 
+            16 
+        );
+
+        point.marker.openPopup(); 
+    }); 
+}
+
+
+
+// const map = L.map("map").setView(
+//     [48.151965, 17.072995],
+//     15
+// );
+
+// L.tileLayer(
+//     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+//     {
+//         maxZoom: 19,
+//         attribution:
+//             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//     }
+// ).addTo(map);
+
+// // Markery
+// // Škola – FEI STU
+// L.marker([48.151965, 17.072995])
+//     .addTo(map)
+//     .bindPopup("<strong>FEI STU</strong><br>Moja škola");
+
+// // Bydlisko – približná alebo fiktívna poloha
+// L.marker([48.158611, 17.063889])
+//     .addTo(map)
+//     .bindPopup("<strong>Moje bydlisko</strong><br>Približná poloha")
+//     .openPopup();
