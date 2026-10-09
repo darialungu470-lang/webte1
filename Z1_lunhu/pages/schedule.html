@@ -44,97 +44,134 @@
                 <span class="date-value" id="current-date"></span>  
             </div>
 
-            <div class="schedule flexbox">
-                <div class="buttons-schedule flexbox">
-                    <button class="btn-schedule">Všetko</button>
-                    <button class="btn-schedule">Prednášky</button>
-                    <button class="btn-schedule">Cvičenia</button>
+            <div class="table-wrapper">
+                <div class="schedule flexbox" id="schedule-content">
+                    <div class="buttons-schedule flexbox">
+                        <button class="btn-schedule active" onclick="allClasses(this)">Všetko</button>
+                        <button class="btn-schedule" onclick="onlyLectures(this)">Prednášky</button>
+                        <button class="btn-schedule" onclick="onlyPractice(this)">Cvičenia</button>
+                    </div>
+
+                    <table class="table-schedule">
+                        <caption class="caption-schedule">Rozvrh hodín</caption>
+                        <thead>
+                            <tr>
+                                <th class="corner-cell">
+                                    <span class="corner-time">Čas</span>
+                                    <span class="corner-day">Deň</span>
+                                </th>
+                                <th>7.00</th>
+                                <th>8.00</th>
+                                <th>9.00</th>
+                                <th>10.00</th>
+                                <th>11.00</th>
+                                <th>12.00</th>
+                                <th>13.00</th>
+                                <th>14.00</th>
+                                <th>15.00</th>
+                                <th>16.00</th>
+                                <th>17.00</th>
+                                <th>18.00</th>
+                                <th>19.00</th>
+                                <th>20.00</th>
+                                <th>21.00</th>
+                            </tr>
+                        </thead>
+                        
+                        <tr>
+                            <th>Pon</th>
+                            <td colspan="2"></td>
+                            <td colspan="2" class="sport-class" data-day="1" data-start="09:00" data-end="11:00"><span id="practice">Pilates</span></td>
+                            <td colspan="2" class="required-class" data-day="1" data-start="11:00" data-end="13:00"><span id="practice">WEBTE</span></td>
+                            <td colspan="2" class="required-class" data-day="1" data-start="12:00" data-end="15:00"><span id="practice">OS</span></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Uto</th>
+                            <td colspan="1"></td>
+                            <td colspan="2" class="dispensable-class" data-day="2" data-start="8:00" data-end="10:00"><span id="lecture">AZA</span></td>
+                            <td colspan="2" class="dispensable-class" data-day="2" data-start="010:00" data-end="12:00"><span id="lecture">WEBTE</span></td>
+                            <td colspan="10"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Str</th>
+                            <td colspan="1"></td>
+                            <td colspan="2" class="dispensable-class" data-day="3" data-start="8:00" data-end="10:00"><span id="lecture">OS</span></td>
+                            <td colspan="2" class="dispensable-class" data-day="3" data-start="10:00" data-end="12:00"><span id="lecture">AZA</span></td>
+                            <td colspan="1"></td>
+                            <td colspan="2" class="dispensable-class" data-day="3" data-start="13:00" data-end="15:00"><span id="lecture">WEBTE</span></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Štv</th>
+                            <td colspan="6"></td>
+                            <td colspan="2" class="sport-class" data-day="4" data-start="13:00" data-end="15:00"><span id="practice">Tance</span></td>
+                            <td colspan="7"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Pia</th>
+                            <td colspan="1"></td>
+                            <td colspan="1" class="required-class" data-day="5" data-start="9:00" data-end="10:00"><span id="practice">AZA</span></td>
+                            <td colspan="13"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Sob</th>
+                            <td colspan="15"></td>
+                        </tr>
+
+                        <tr>
+                            <th>Ned</th>
+                            <td colspan="15"></td>
+                        </tr>
+
+                    </table>
+
+                    <p id="schedule-message" class="schedule-message" aria-live="polite"></p>
+                </div>
+            </div>
+
+
+                <div class="progress-bar" id="semester-progress">
+                    <div class="progress-bar__info">
+                        <h3>Uplynutie semestra</h3>
+                        <span id="semester-percentage">0 %</span>
+                    </div>
+
+                    <div
+                        class="progress-bar__track"
+                        id="semester-progress-bar"
+                        role="progressbar"
+                        aria-label="Percento uplynutého semestra"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow="0"
+                    >
+                        <div
+                            class="progress-bar__fill"
+                            id="semester-progress-fill"
+                        ></div>
+                    </div>
+
+                    <div class="semester-dates">
+                        <span>
+                            Začiatok:
+                            <time id="semester-start-date"></time>
+                        </span>
+
+                        <span>
+                            Koniec:
+                            <time id="semester-end-date"></time>
+                        </span>
+                    </div>
                 </div>
 
-                <table class="table-schedule">
-                    <caption class="caption-schedule">Rozvrh hodín</caption>
-                    <thead>
-                        <tr>
-                            <th class="corner-cell">
-                                <span class="corner-time">Čas</span>
-                                <span class="corner-day">Deň</span>
-                            </th>
-                            <th>7.00</th>
-                            <th>8.00</th>
-                            <th>9.00</th>
-                            <th>10.00</th>
-                            <th>11.00</th>
-                            <th>12.00</th>
-                            <th>13.00</th>
-                            <th>14.00</th>
-                            <th>15.00</th>
-                            <th>16.00</th>
-                            <th>17.00</th>
-                            <th>18.00</th>
-                            <th>19.00</th>
-                            <th>20.00</th>
-                            <th>21.00</th>
-                        </tr>
-                    </thead>
-                    
-                    <tr>
-                        <th>Pon</th>
-                        <td colspan="2"></td>
-                        <td colspan="2" id="sport-class"><span>Pilates</span></td>
-                        <td colspan="2" id="required-class"><span>WEBTE</span></td>
-                        <td colspan="2" id="required-class"><span>OS</span></td>
-                        <td colspan="7"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Uto</th>
-                        <td colspan="1"></td>
-                        <td colspan="2" id="dispensable-class"><span>AZA</span></td>
-                        <td colspan="2" id="dispensable-class"><span>WEBTE</span></td>
-                        <td colspan="10"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Str</th>
-                        <td colspan="1"></td>
-                        <td colspan="2" id="dispensable-class"><span>OS</span></td>
-                        <td colspan="2" id="dispensable-class"><span>AZA</span></td>
-                        <td colspan="1"></td>
-                        <td colspan="2" id="dispensable-class"><span>WEBTE</span></td>
-                        <td colspan="7"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Štv</th>
-                        <td colspan="6"></td>
-                        <td colspan="2" id="sport-class"><span>Tance</span></td>
-                        <td colspan="7"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Pia</th>
-                        <td colspan="1"></td>
-                        <td colspan="1" id="required-class"><span>AZA</span></td>
-                        <td colspan="13"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Sob</th>
-                        <td colspan="15"></td>
-                    </tr>
-
-                    <tr>
-                        <th>Ned</th>
-                        <td colspan="15"></td>
-                    </tr>
-
-                </table>
-            </div>
-
-            <div class="progress-bar">
-                <h3>Title</h3>
-                Progress bar
-            </div>
+                <p id="semester-message" class="semester-message"
+                role="status" aria-live="polite"></p>
         </main>
     </div>
 
