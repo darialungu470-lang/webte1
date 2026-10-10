@@ -343,7 +343,7 @@ p{
 
     margin: 0 50px;
 
-    border: 7px solid black;
+    border: 5px solid var(--color-brand);
     border-radius: 100px;
     box-shadow: 0 0 5px var(--color-target);
 
@@ -365,27 +365,50 @@ p{
 }
 
 .title-targets{
+    margin-bottom: 0;
     font-size: 50px;
-    
 }
 
-.target{
-    font-size: 20px;
-    line-height: 5;
+.targets{
+    padding: 0;
+}
+
+.target {
+font-size: 20px;
+line-height: 5;
+list-style: none;
+position: relative;
+padding-left: 65px;
+}
+
+.target::before {
+content: "";
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+
+width: 50px;
+height: 50px;
+
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
 
 }
 
-#cooking {
-    list-style-image: url("../icons/books.svg");
+#cooking::before {
+background-image: url("../icons/books.svg");
 }
 
-#romane{
-    list-style-image: url("../icons/pot.svg");
+#romane::before {
+background-image: url("../icons/pot.svg");
 }
 
-#programing{
-    list-style-image: url("../icons/javascript.svg");
+#programing::before {
+background-image: url("../icons/javascript.svg");
 }
+
 
 /*- Section Quote -*/
 
@@ -1542,6 +1565,26 @@ p{
     max-width: 100%;
 }
 
+.footer a{
+    font-size: 0.85rem;
+    color: var(--color-subtitle)
+}
+
+/* For "index.html" */
+
+#index .details{
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-footer{
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+/* '''''''''''''''''''''''''''''''' */
+
 .details{
     display: flex;
     justify-content: space-between;
@@ -1552,16 +1595,16 @@ p{
 
 }
 
-.email-footer:hover,
-.phone-footer:hover{
+.footer a:hover{
     color: var(--color-brand);
 
 }
 
 .year-footer{
-    font-size: 14px;
+    font-size: 0.75rem;
     margin: 0;
     text-align: center;
+    color: var(--color-subtitle);
 }
 
 /* MOBIL */
@@ -1582,5 +1625,10 @@ p{
 
     .year-footer {
         margin-top: 5px;
+    }
+
+    .info-footer{
+        flex-direction: column;
+        justify-content: center;
     }
 }
