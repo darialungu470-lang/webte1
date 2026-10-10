@@ -2,8 +2,8 @@
         SEMESTR DATE
 ------------------------------------------ */
 
-const SEMESTER_START = new Date(2026, 8, 14); // 21.09.2026
-const SEMESTER_END = new Date(2026, 11, 14);   // 18.12.2026
+const SEMESTER_START = new Date(2026, 8, 14); // 14.09.2026
+const SEMESTER_END = new Date(2026, 11, 14);   // 14.12.2026
 
 
 /* ------------------------------------------
@@ -177,7 +177,7 @@ function highlightCurrentClass() {
     const day = now.getDay() === 0 ? 7 : now.getDay();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-    // const day = 5; // Pondelok
+    // const day = 1; // Pondelok
     // const currentMinutes = 10 * 60; // 10:00
 
     const classes = document.querySelectorAll(

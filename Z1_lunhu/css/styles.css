@@ -1278,8 +1278,6 @@ background-image: url("../icons/javascript.svg");
 }
 
 
-
-
 /* ------------------------------------------
                    "workplace.html"
 ------------------------------------------ */
@@ -1566,9 +1564,7 @@ background-image: url("../icons/javascript.svg");
 .table-wrapper { 
     width: 100%; 
     max-width: 100%; 
-    overflow-x: 
-    auto; 
-    -webkit-overflow-scrolling: touch; }
+}
 
 .table-schedule{
     width: 100%;
@@ -1748,6 +1744,21 @@ background-image: url("../icons/javascript.svg");
     margin-top: 0.7rem;
     font-size: var(--font-size);
     color: #555;
+}
+
+@media(max-width: 900px){
+
+    .scroll-tabl{
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        direction: ltr;
+        box-sizing: border-box;
+        scroll-behavior: auto;
+    }
 }
 
 @media (max-width: 480px) {
