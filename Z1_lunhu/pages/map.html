@@ -42,39 +42,77 @@
         <main class="main">
 
             <div class = "title-map flexbox">
-                <h1 class="title">Miesta, ktoré navštevujem</h1>
-                <h2 class="subtitle">Moja škola a miesto, kde bývam</h2>
+                <h1 class="title">Môj svet na mape</h1>
+                <h2 class="subtitle">Miesta, ku ktorým sa každý deň vraciam</h2>
             </div>
 
-            <div class="rules-map flexbox">
-                <p>Na mape nájdeš dve dôležité miesta v mojom každodennom živote.</p>
-                <p>Kliknutím na značku zobrazíš názov daného miesta.</p>
-            </div>
-
-            <section class="map-place">
-                <h3>Moja mapa</h3>
-
-                <p class="map-instruction"> Kliknutím na mapu môžeš pridať nové miesto. </p>
+            <section class="map-place flexbox">
 
                 <div id="map"></div>
 
-                <div class="map-add-point"> 
-                    <label for="new-point-name">Názov nového miesta</label> 
-                    <input type="text" id="new-point-name" placeholder="Napr. Obľúbená kaviareň" > 
-                    <button type="button" id="add-point-button"> 
-                        Pridať miesto 
-                    </button> 
-                    <p id="map-message" role="status"></p> 
+                <div id="map-empty-state" class="map-empty-state">
+                    <p><strong>Ako pridať svoje prvé miesto?</strong></p>
+                    <ol>
+                        <li>Klikni na mapu na miesto, ktoré chceš uložiť.</li>
+                        <li>Zadaj názov miesta do poľa nižšie.</li>
+                        <li>Klikni na tlačidlo „Pridať miesto“.</li>
+                    </ol>
+                    <p>Miesto sa zobrazí na mape a pridá sa do tvojho zoznamu.</p>
                 </div>
 
-                <div class="map-points"> 
-                    <label for="map-points-list">Moje miesta</label> 
-                    <select id="map-points-list"> 
-                        <option value="">Vyber miesto zo zoznamu</option> 
-                    </select> 
-                </div>
+                <div class="buttons-map">
+
+                    <div class="map-add-point"> 
+                        <label for="new-point-name">Názov nového miesta</label> 
+                        <input type="text" id="new-point-name" placeholder="Napr. Obľúbená kaviareň" > 
+                        <button type="button" id="add-point-button"> 
+                            Pridať miesto 
+                        </button> 
+                        <p id="map-message" role="status"></p> 
+                    </div>
+
+                    <div class="map-points"> 
+                        <label for="map-points-list">Moje miesta</label> 
+                        <select id="map-points-list"> 
+                            <option value="">Vyber miesto zo zoznamu</option> 
+                        </select> 
+                        <button type="button" id="remove-point-button" disabled>
+                            Odstrániť vybrané miesto
+                        </button>
+                    </div>
+
+                    <!-- <div class="map-distance">
+                        <label for="map-target">Cieľ</label>
+                        <select id="map-target">
+                            <option value="none">Nezobrazovať vzdialenosť</option>
+                            <option value="school">Škola – FEI STU</option>
+                            <option value="home">Domov</option>
+                        </select>
+                        <p id="distance-result" role="status">
+                            Vyber miesto zo zoznamu a zobrazí sa vzdialenosť.
+                        </p>
+                    </div> -->
+
+                    <div class="map-distance">
+                        <h3>Vzdialenosť medzi miestami</h3>
+
+                        <label for="distance-from">Odkiaľ?</label>
+                        <select id="distance-from">
+                            <option value="">Vyber začiatočné miesto</option>
+                        </select>
+
+                        <label for="distance-to">Kam?</label>
+                        <select id="distance-to">
+                            <option value="">Vyber cieľové miesto</option>
+                        </select>
+
+                        <p id="distance-result" role="status">
+                            Vyber dve miesta a zobrazí sa vzdialenosť.
+                        </p>
+                    </div>
+
+                </div>  
             </section>
-            
 
         </main>
     </div>
@@ -83,6 +121,25 @@
 
     <footer class="footer flexbox">
         <div class="container-footer">
+            <div class="map-sources flexbox">
+                <p>
+                    Mapové podklady:
+                    <a href="https://www.openstreetmap.org/copyright"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                        © OpenStreetMap contributors
+                    </a>
+                </p>
+
+                <p>
+                    Mapová knižnica:
+                    <a href="https://leafletjs.com/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                        Leaflet
+                    </a>
+                </p>
+            </div>
             <address class="details">
                 <a href="mailto:darialungu470@gmail.com" class="email-footer">darialungu470@gmail.com</a>
                 <a href="tel:+421952206607" class="phone-footer">+421952206607</a>

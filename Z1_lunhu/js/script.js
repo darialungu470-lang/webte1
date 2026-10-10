@@ -382,11 +382,51 @@ updateSemesterProgress();
 
 const mapElement = document.getElementById("map");
 
+
+// Výpočet vzdialenosti medzi dvoma bodmi pomocou Haversinovho vzorca.
+function haversineDistance(lat1, lon1, lat2, lon2) {
+    // Polomer Zeme v metroch.
+    const earthRadius = 6371000;
+
+    // Prevod stupňov na radiány.
+    const toRadians = function (degrees) {
+        return degrees * Math.PI / 180;
+    };
+
+    const phi1 = toRadians(lat1);
+    const phi2 = toRadians(lat2);
+
+    const deltaPhi = toRadians(lat2 - lat1);
+    const deltaLambda = toRadians(lon2 - lon1);
+
+    const a =
+        Math.sin(deltaPhi / 2) ** 2 +
+        Math.cos(phi1) *
+        Math.cos(phi2) *
+        Math.sin(deltaLambda / 2) ** 2;
+
+    const c = 2 * Math.atan2(
+        Math.sqrt(a),
+        Math.sqrt(1 - a)
+    );
+
+    return earthRadius * c;
+}
+
+
 if (mapElement) { 
+
+    const emptyState = document.getElementById("map-empty-state");
+    
     const map = L.map("map").setView( 
         [48.151965, 17.072995], 
         14 
     );
+
+    // Pri zmene veľkosti okna upravíme vykreslenie mapy.
+    window.addEventListener("resize", function () {
+        map.invalidateSize();
+    });
 
     L.tileLayer( 
         "https://tile.openstreetmap.org/{z}/{x}/{y}.png", 
@@ -401,8 +441,74 @@ if (mapElement) {
     // Všetky vytvorené body uchovávame v poli. 
     const points = [];
 
+    // Zistí, či používateľ pridal aspoň jedno vlastné miesto.
+    function updateEmptyState() {
+        const hasUserPoints = points.some(function (point) {
+            return point.removable;
+        });
+
+        if (emptyState) {
+            emptyState.hidden = hasUserPoints;
+        }
+    }
+
+
+    const STORAGE_KEY = "map-user-points";
+
+    // Uloží vlastné body do localStorage.
+    function saveUserPoints() {
+        const userPoints = points
+            .filter(function (point) {
+                return point.removable;
+            })
+            .map(function (point) {
+                return {
+                    name: point.name,
+                    lat: point.lat,
+                    lng: point.lng
+                };
+            });
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(userPoints)
+        );
+    }
+
+    // Načíta vlastné body po otvorení stránky.
+    function loadUserPoints() {
+        try {
+            const savedPoints = JSON.parse(
+                localStorage.getItem(STORAGE_KEY) || "[]"
+            );
+
+            if (!Array.isArray(savedPoints)) {
+                return;
+            }
+
+            savedPoints.forEach(function (point) {
+                if (
+                    point &&
+                    typeof point.name === "string" &&
+                    Number.isFinite(point.lat) &&
+                    Number.isFinite(point.lng)
+                ) {
+                    addPoint(
+                        point.name,
+                        point.lat,
+                        point.lng,
+                        true
+                    );
+                }
+            });
+        } catch (error) {
+            console.error("Nepodarilo sa načítať uložené miesta:", error);
+        }
+    }
+
+
     // Funkcia na pridanie bodu do mapy aj zoznamu. 
-    function addPoint(name, lat, lng) { 
+    function addPoint(name, lat, lng, removable = false) { 
         const marker = L.marker([lat, lng]).addTo(map); 
         
         marker.bindPopup(`<strong>${name}</strong>`);
@@ -411,7 +517,8 @@ if (mapElement) {
             name: name, 
             lat: lat, 
             lng: lng, 
-            marker: marker 
+            marker: marker,
+            removable: removable
         };
 
         points.push(point);
@@ -422,11 +529,15 @@ if (mapElement) {
         option.textContent = name; 
         
         pointsList.appendChild(option); 
+        updateEmptyState();
     }
 
     // Pôvodné pevné body. 
     addPoint("FEI STU – moja škola", 48.151965, 17.072995); 
     addPoint("Moje bydlisko", 48.1455, 17.1050);
+
+    // Obnovíme vlastné miesta z localStorage.
+    loadUserPoints();
 
     // Prvky na pridávanie nového miesta. 
     const pointNameInput = document.getElementById("new-point-name"); 
@@ -459,7 +570,8 @@ if (mapElement) {
             return; 
         }
 
-        addPoint( name, newPointLocation.lat, newPointLocation.lng );
+        addPoint( name, newPointLocation.lat, newPointLocation.lng, true );
+        saveUserPoints();
 
         mapMessage.textContent = "Miesto bolo pridané."; 
         pointNameInput.value = ""; 
@@ -484,32 +596,147 @@ if (mapElement) {
 
         point.marker.openPopup(); 
     }); 
+
+    // Tlačidlo na odstránenie vybraného bodu.
+    const removePointButton = document.getElementById("remove-point-button");
+
+    // Tlačidlo sa aktivuje iba pri výbere vlastného bodu.
+    pointsList.addEventListener("change", function () {
+        const index = Number(this.value);
+        const point = points[index];
+
+        removePointButton.disabled = !point || !point.removable;
+    });
+
+
+    // Odstránenie bodu z mapy aj zo zoznamu.
+    removePointButton.addEventListener("click", function () {
+        const index = Number(pointsList.value);
+        const point = points[index];
+
+        if (!point || !point.removable) {
+            return;
+        }
+
+        // Odstránime marker z mapy.
+        map.removeLayer(point.marker);
+
+        // Odstránime položku zo zoznamu.
+        pointsList.remove(index + 1);
+
+        // Odstránime bod z poľa.
+        points.splice(index, 1);
+        saveUserPoints();
+
+        // Aktualizujeme hodnoty v zozname.
+        Array.from(pointsList.options).forEach(function (option, i) {
+            if (i > 0) {
+                option.value = i - 1;
+            }
+        });
+
+        // Vrátime výber na úvodnú možnosť.
+        pointsList.value = "";
+        removePointButton.disabled = true;
+    });
+
+
+    // Výber cieľa a zobrazenie vzdialenosti.
+    const targetSelect = document.getElementById("map-target");
+    const distanceResult = document.getElementById("distance-result");
+
+    // Súradnice cieľov.
+    const targets = {
+        school: {
+            name: "FEI STU – moja škola",
+            lat: 48.151965,
+            lng: 17.072995
+        },
+        home: {
+            name: "Moje bydlisko",
+            lat: 48.1455,
+            lng: 17.1050
+        }
+    };
+
+    // Čiara medzi vybraným bodom a cieľom.
+    let distanceLine = null;
+
+    // Vypočíta vzdialenosť a zobrazí spojnicu.
+    function showDistance() {
+        if (targetSelect.value === "none") {
+            distanceResult.textContent = "Vzdialenosť sa nezobrazuje.";
+
+            if (distanceLine) {
+                map.removeLayer(distanceLine);
+                distanceLine = null;
+            }
+
+            return;
+        }
+
+        const index = Number(pointsList.value);
+        const point = points[index];
+
+        if (pointsList.value === "" || !point) {
+            distanceResult.textContent =
+                "Najprv vyber miesto zo zoznamu.";
+
+            if (distanceLine) {
+                map.removeLayer(distanceLine);
+                distanceLine = null;
+            }
+
+            return;
+        }
+
+        const target = targets[targetSelect.value];
+
+        const distance = haversineDistance(
+            point.lat,
+            point.lng,
+            target.lat,
+            target.lng
+        );
+
+        const distanceKm = distance / 1000;
+
+        distanceResult.textContent =
+            "Vzdialenosť od miesta „" + point.name +
+            "“ k cieľu „" + target.name + "“ je " +
+            distanceKm.toLocaleString("sk-SK", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + " km.";
+
+        // Odstránime predchádzajúcu spojnicu.
+        if (distanceLine) {
+            map.removeLayer(distanceLine);
+        }
+
+        // Nakreslíme novú spojnicu.
+        distanceLine = L.polyline(
+            [
+                [point.lat, point.lng],
+                [target.lat, target.lng]
+            ],
+            {
+                color: "#b52565",
+                weight: 4,
+                dashArray: "8, 8"
+            }
+        ).addTo(map);
+
+        // Zobrazíme oba body aj spojnicu.
+        map.fitBounds(distanceLine.getBounds(), {
+            padding: [30, 30]
+        });
+    }
+
+    // Zmena vybraného miesta alebo cieľa.
+    pointsList.addEventListener("change", showDistance);
+    targetSelect.addEventListener("change", showDistance);
+
+    updateEmptyState();
 }
 
-
-
-// const map = L.map("map").setView(
-//     [48.151965, 17.072995],
-//     15
-// );
-
-// L.tileLayer(
-//     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-//     {
-//         maxZoom: 19,
-//         attribution:
-//             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//     }
-// ).addTo(map);
-
-// // Markery
-// // Škola – FEI STU
-// L.marker([48.151965, 17.072995])
-//     .addTo(map)
-//     .bindPopup("<strong>FEI STU</strong><br>Moja škola");
-
-// // Bydlisko – približná alebo fiktívna poloha
-// L.marker([48.158611, 17.063889])
-//     .addTo(map)
-//     .bindPopup("<strong>Moje bydlisko</strong><br>Približná poloha")
-//     .openPopup();
