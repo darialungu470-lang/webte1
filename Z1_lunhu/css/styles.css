@@ -459,6 +459,306 @@ background-image: url("../icons/javascript.svg");
 }
 
 
+/* ==========================================
+   TABLET – obrazovky do 900 px
+========================================== */
+
+@media screen and (max-width: 900px) {
+
+    /* Hlavný obsah */
+    .main {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 20px;
+    }
+
+    /* Kto som ja */
+    .whoami {
+        gap: 25px;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    .myfoto {
+        max-width: 200px;
+        flex-shrink: 0;
+        margin-left: 0;
+    }
+
+    .myfoto:hover {
+        max-width: 210px;
+    }
+
+    .whoami-text {
+        min-width: 0;
+        padding: 25px;
+        margin-right: 0;
+    }
+
+    /* Karty záujmov */
+    .cards {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .card {
+        flex: 0 1 200px;
+        min-width: 0;
+    }
+
+    .image-card {
+        width: 100%;
+        height: 180px;
+    }
+
+    .card:hover .image-card {
+        width: 100%;
+        height: 180px;
+    }
+
+    .text-card {
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    /* Kam smerujem */
+    .mytargets {
+        width: 100%;
+        max-width: 860px;
+        box-sizing: border-box;
+        gap: 20px;
+    }
+
+    .img-target {
+        max-width: 160px;
+        width: 30%;
+        flex-shrink: 0;
+        margin: 15px 40px;
+    }
+
+    .img-target:hover {
+        max-width: 170px;
+    }
+
+    .conteiner-targets {
+        width: auto;
+        min-width: 0;
+        flex: 1;
+        padding-right: 15px;
+    }
+
+    .title-targets {
+        font-size: 38px;
+    }
+
+    .target {
+        font-size: 17px;
+        line-height: 3;
+        padding-left: 45px;
+    }
+
+    .target::before {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Citát */
+    .quote-aside {
+        width: 100%;
+        max-width: 855px;
+        box-sizing: border-box;
+    }
+
+    .text-quote {
+        font-size: 22px;
+    }
+}
+
+
+/*   MOBIL – obrazovky do 600-700 px  */
+
+@media screen and (max-width: 700px) {
+
+    /* Who am I */
+    .whoami {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0;
+        align-items: center;
+    }
+
+    .myfoto {
+        width: 180px;
+        max-width: 180px;
+        margin: 0;
+    }
+
+    .myfoto:hover {
+        max-width: 180px;
+    }
+
+    .whoami-text {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .whoami-text h1 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .text-whoami {
+        font-size: 15px;
+        line-height: 1.7;
+        overflow-wrap: break-word;
+    }
+
+    /* My hobbies */
+    .hobbies {
+        padding: 0 0 30px;
+    }
+
+    .hobbies h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 320px;
+        flex: none;
+        box-sizing: border-box;
+        border-radius: 12px;
+    }
+
+    .image-card {
+        width: 100%;
+        height: 220px;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .card:hover .image-card {
+        width: 100%;
+        height: 220px;
+    }
+
+    .text-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 15px 10px;
+        align-items: center;
+    }
+
+    .title-card {
+        text-align: center;
+    }
+
+    .desc-card {
+        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .main {
+        padding: 0 12px;
+    }
+
+    /* My targets */
+    .mytargets {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .img-target {
+        width: 150px;
+        max-width: 150px;
+        margin: 0;
+    }
+
+    .img-target:hover {
+        max-width: 150px;
+    }
+
+    .conteiner-targets {
+        box-sizing: border-box;
+        padding: 0;
+        align-items: center;
+    }
+
+    .title-targets {
+        font-size: 32px;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .targets {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 10px 0
+    }
+
+    .target {
+        font-size: 15px;
+        line-height: 1.5;
+        min-height: 45px;
+        box-sizing: border-box;
+        padding: 10px 0 10px 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    .target::before {
+        width: 28px;
+        height: 28px;
+        top: 50%;
+    }
+
+    /* Quote */
+    .quote-aside {
+        margin: 20px 0;
+        padding: 10px 12px;
+        border-left-width: 4px;
+    }
+
+    .quote-wrap {
+        margin: 0;
+    }
+
+    .text-quote {
+        font-size: 18px;
+        line-height: 1.6;
+        overflow-wrap: break-word;
+    }
+
+    .quotes {
+        font-size: 30px;
+    }
+
+    .author-quote {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+}
+
+
 
 /* ------------------------------------------
                    "cv.html"
