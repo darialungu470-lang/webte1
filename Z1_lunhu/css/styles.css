@@ -1326,14 +1326,20 @@ p{
 }
 
 .buttons-map {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    /* flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 2rem;
-    width: 100%;
+    gap: 2rem; 
+    width: 100%;*/
+    
     box-sizing: border-box;
     margin-top: 1rem;
+}
+
+.btn-place-on-map{
+    flex-direction: column;
 }
 
 .map-add-point,
@@ -1385,6 +1391,8 @@ p{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-right: 2.5rem;
+    padding: 0 2rem;
     gap: 0.6rem;
 }
 
@@ -1486,12 +1494,6 @@ p{
         padding: 1.25rem;
     }
 
-    .buttons-map {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1.25rem;
-    }
-
     .map-add-point,
     .map-points,
     .map-distance {
@@ -1513,7 +1515,7 @@ p{
 }
 
 /* Úzke mobilné displeje. */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .map-place {
         padding: 0.75rem;
         border-radius: 8px;
@@ -1545,6 +1547,10 @@ p{
     .map-add-point button,
     #remove-point-button {
         font-size: 1rem;
+    }
+
+    .buttons-map{
+        grid-template-columns: auto;
     }
 }
 

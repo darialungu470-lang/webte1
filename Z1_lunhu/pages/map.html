@@ -62,37 +62,27 @@
 
                 <div class="buttons-map">
 
-                    <div class="map-add-point"> 
-                        <label for="new-point-name">Názov nového miesta</label> 
-                        <input type="text" id="new-point-name" placeholder="Napr. Obľúbená kaviareň" > 
-                        <button type="button" id="add-point-button"> 
-                            Pridať miesto 
-                        </button> 
-                        <p id="map-message" role="status"></p> 
+                    <div class="btn-place-on-map flexbox">
+                        <div class="map-add-point"> 
+                            <label for="new-point-name">Názov nového miesta</label> 
+                            <input type="text" id="new-point-name" placeholder="Napr. Obľúbená kaviareň" > 
+                            <button type="button" id="add-point-button"> 
+                                Pridať miesto 
+                            </button> 
+                            <p id="map-message" role="status"></p> 
+                        </div>
+
+                        <div class="map-points"> 
+                            <label for="map-points-list">Moje miesta</label> 
+                            <select id="map-points-list"> 
+                                <option value="">Vyber miesto zo zoznamu</option> 
+                            </select> 
+                            <button type="button" id="remove-point-button" disabled>
+                                Odstrániť vybrané miesto
+                            </button>
+                        </div>
                     </div>
-
-                    <div class="map-points"> 
-                        <label for="map-points-list">Moje miesta</label> 
-                        <select id="map-points-list"> 
-                            <option value="">Vyber miesto zo zoznamu</option> 
-                        </select> 
-                        <button type="button" id="remove-point-button" disabled>
-                            Odstrániť vybrané miesto
-                        </button>
-                    </div>
-
-                    <!-- <div class="map-distance">
-                        <label for="map-target">Cieľ</label>
-                        <select id="map-target">
-                            <option value="none">Nezobrazovať vzdialenosť</option>
-                            <option value="school">Škola – FEI STU</option>
-                            <option value="home">Domov</option>
-                        </select>
-                        <p id="distance-result" role="status">
-                            Vyber miesto zo zoznamu a zobrazí sa vzdialenosť.
-                        </p>
-                    </div> -->
-
+                    
                     <div class="map-distance">
                         <h3>Vzdialenosť medzi miestami</h3>
 

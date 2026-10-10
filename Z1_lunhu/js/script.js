@@ -572,6 +572,7 @@ if (mapElement) {
 
         addPoint( name, newPointLocation.lat, newPointLocation.lng, true );
         saveUserPoints();
+        updateDistanceOptions();
 
         mapMessage.textContent = "Miesto bolo pridané."; 
         pointNameInput.value = ""; 
@@ -638,49 +639,63 @@ if (mapElement) {
         // Vrátime výber na úvodnú možnosť.
         pointsList.value = "";
         removePointButton.disabled = true;
+
+        updateDistanceOptions();
+        updateEmptyState();
     });
 
 
     // Výber cieľa a zobrazenie vzdialenosti.
-    const targetSelect = document.getElementById("map-target");
+    const distanceFrom = document.getElementById("distance-from");
+    const distanceTo = document.getElementById("distance-to");
     const distanceResult = document.getElementById("distance-result");
 
-    // Súradnice cieľov.
-    const targets = {
-        school: {
-            name: "FEI STU – moja škola",
-            lat: 48.151965,
-            lng: 17.072995
-        },
-        home: {
-            name: "Moje bydlisko",
-            lat: 48.1455,
-            lng: 17.1050
-        }
-    };
-
-    // Čiara medzi vybraným bodom a cieľom.
     let distanceLine = null;
 
-    // Vypočíta vzdialenosť a zobrazí spojnicu.
+    // Naplníme oba výbery všetkými miestami.
+    function updateDistanceOptions() {
+        const previousFrom = distanceFrom.value;
+        const previousTo = distanceTo.value;
+
+        [distanceFrom, distanceTo].forEach(function (select) {
+            select.replaceChildren();
+
+            const placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = "Vyber miesto";
+            select.appendChild(placeholder);
+
+            points.forEach(function (point, index) {
+                const option = document.createElement("option");
+                option.value = index;
+                option.textContent = point.name;
+                select.appendChild(option);
+            });
+        });
+
+        // Zachováme výber, ak dané miesto stále existuje.
+        if (previousFrom !== "" && points[Number(previousFrom)]) {
+            distanceFrom.value = previousFrom;
+        }
+
+        if (previousTo !== "" && points[Number(previousTo)]) {
+            distanceTo.value = previousTo;
+        }
+    }
+
+    // Vypočítame vzdialenosť medzi dvoma vybranými bodmi.
     function showDistance() {
-        if (targetSelect.value === "none") {
-            distanceResult.textContent = "Vzdialenosť sa nezobrazuje.";
+        const fromIndex = distanceFrom.value;
+        const toIndex = distanceTo.value;
 
-            if (distanceLine) {
-                map.removeLayer(distanceLine);
-                distanceLine = null;
-            }
-
-            return;
-        }
-
-        const index = Number(pointsList.value);
-        const point = points[index];
-
-        if (pointsList.value === "" || !point) {
+        if (
+            fromIndex === "" ||
+            toIndex === "" ||
+            !points[fromIndex] ||
+            !points[toIndex]
+        ) {
             distanceResult.textContent =
-                "Najprv vyber miesto zo zoznamu.";
+                "Vyber dve miesta a zobrazí sa vzdialenosť.";
 
             if (distanceLine) {
                 map.removeLayer(distanceLine);
@@ -690,35 +705,46 @@ if (mapElement) {
             return;
         }
 
-        const target = targets[targetSelect.value];
+        if (fromIndex === toIndex) {
+            distanceResult.textContent =
+                "Vyber dve rôzne miesta.";
+
+            if (distanceLine) {
+                map.removeLayer(distanceLine);
+                distanceLine = null;
+            }
+
+            return;
+        }
+
+        const from = points[fromIndex];
+        const to = points[toIndex];
 
         const distance = haversineDistance(
-            point.lat,
-            point.lng,
-            target.lat,
-            target.lng
+            from.lat,
+            from.lng,
+            to.lat,
+            to.lng
         );
 
-        const distanceKm = distance / 1000;
-
         distanceResult.textContent =
-            "Vzdialenosť od miesta „" + point.name +
-            "“ k cieľu „" + target.name + "“ je " +
-            distanceKm.toLocaleString("sk-SK", {
+            "Vzdialenosť medzi miestami „" +
+            from.name + "“ a „" + to.name + "“ je " +
+            (distance / 1000).toLocaleString("sk-SK", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             }) + " km.";
 
-        // Odstránime predchádzajúcu spojnicu.
+        // Odstránime starú spojnicu.
         if (distanceLine) {
             map.removeLayer(distanceLine);
         }
 
-        // Nakreslíme novú spojnicu.
+        // Vykreslíme novú spojnicu.
         distanceLine = L.polyline(
             [
-                [point.lat, point.lng],
-                [target.lat, target.lng]
+                [from.lat, from.lng],
+                [to.lat, to.lng]
             ],
             {
                 color: "#b52565",
@@ -727,16 +753,16 @@ if (mapElement) {
             }
         ).addTo(map);
 
-        // Zobrazíme oba body aj spojnicu.
         map.fitBounds(distanceLine.getBounds(), {
             padding: [30, 30]
         });
     }
 
-    // Zmena vybraného miesta alebo cieľa.
-    pointsList.addEventListener("change", showDistance);
-    targetSelect.addEventListener("change", showDistance);
+    distanceFrom.addEventListener("change", showDistance);
+    distanceTo.addEventListener("change", showDistance);
 
+    // Prvé naplnenie výberov.
+    updateDistanceOptions();
     updateEmptyState();
 }
 
