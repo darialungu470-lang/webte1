@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prečítajte si životopis Darie Lungu, jej vzdelanie, skúsenosti, zručnosti a profesijné ciele.">
+
+    <meta property="og:title" content="Môj príbeh | Daria Lungu">
+    <meta property="og:description" content="Moje vzdelanie, skúsenosti, zručnosti a cesta v oblasti informatiky.">
+    <meta property="og:image" content="https://kommodo.ai/i/jzYQqnnXY8SPSROpUwql">
+
     <title>Môj príbeh</title>
 
     <link rel="stylesheet" href="../css/styles.css">
     <link href="../css/print.css" media="print" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../favicon.png">
 </head>
 <body>
     <header class="header flexbox">
         <div class="logo-things flexbox">
-            <img src="../logo.png" alt="Je to logo" class="logo">
+            <img src="../favicon.png" alt="Je to logo" class="logo">
             <h1 class="logo-text">Lungu Daria</h1>
         </div>
 
@@ -41,12 +48,12 @@
 
                     <address class="details">
                         <div>
-                            <p>Moja pošta:</p>
-                            <a href="mailto:darialungu470@gmail.com" class="email-footer">darialungu470@gmail.com</a>
+                            <p>Napíš mi:</p>
+                            <a href="mailto:darialungu470@gmail.com">darialungu470@gmail.com</a>
                         </div>
                         <div>
-                            <p>Moje tel. číslo:</p>
-                            <a href="tel:+421952206607" class="phone-footer">+421952206607</a>
+                            <p>Zavolaj mi:</p>
+                            <a href="tel:+421952206607">+421952206607</a>
                         </div>
                     </address>
                 </section>
@@ -138,48 +145,85 @@
                         </div>
                     </div>
 
-                    <div class="skills card-cv flexbox">
-                        <h2 class="title-skills">Zručnosti</h2>
-                        <ul class="skill-levels flexbox">
-                            <li id="junior" class="level">Junior</li>
-                            <li id="middle" class="level">Middle</li>
-                            <li id="senior" class="level">Senior</li>
-                        </ul>
+                    <div class="skills">
 
-                        <div class="wrap-skills">
-                            <details class="skill">
-                                <summary class="title-skill">Webové technologie</summary>
+                        <div class="digital-skills card-cv flexbox">
 
-                                <ul class="list-skill">
-                                    <li id="middle" class="item-skill level">HTML</li>
-                                    <li id="junior" class="item-skill level">CSS</li>
-                                    <li id="junior" class="item-skill level">JavaScript</li>
-                                </ul>
-                            </details>
+                            <h2 class="title-skills">Digitálne zručnosti</h2>
+                            <ul class="skill-levels flexbox">
+                                <li id="junior" class="level">Junior</li>
+                                <li id="middle" class="level">Middle</li>
+                                <li id="senior" class="level">Senior</li>
+                            </ul>
 
-                            <details class="skill">
-                                <summary class="title-skill">Backend</summary>
+                            <div class="wrap-skills flexbox">
+                                <details class="skill">
+                                    <summary class="title-skill">Webové technologie</summary>
 
-                                <ul class="list-skill">
-                                    <li id="junior" class="item-skill level">Python</li>
-                                    <li id="junior" class="item-skill level">C</li>
-                                    <li id="junior" class="item-skill level">C++</li>
-                                    <li id="junior" class="item-skill level">Java</li>
-                                </ul>
-                            </details>
+                                    <ul class="list-skill">
+                                        <li id="middle" class="item-skill level">HTML</li>
+                                        <li id="junior" class="item-skill level">CSS</li>
+                                        <li id="junior" class="item-skill level">JavaScript</li>
+                                    </ul>
+                                </details>
 
-                            <details class="skill">
-                                <summary class="title-skill">Ďalšie zručnosti</summary>
+                                <details class="skill">
+                                    <summary class="title-skill">Backend</summary>
 
-                                <ul class="list-skill">
-                                    <li id="junior" class="item-skill level">Figma</li>
-                                    <li id="middle" class="item-skill level">Scratch</li>
-                                    <li id="junior" class="item-skill level">Matlab</li>
-                                    <li id="middle" class="item-skill level">Video Editing</li>
-                                    <li id="junior" class="item-skill level">Marketing</li>
-                                </ul>
-                            </details>
+                                    <ul class="list-skill">
+                                        <li id="junior" class="item-skill level">Python</li>
+                                        <li id="junior" class="item-skill level">C</li>
+                                        <li id="junior" class="item-skill level">C++</li>
+                                        <li id="junior" class="item-skill level">Java</li>
+                                    </ul>
+                                </details>
+
+                                <details class="skill">
+                                    <summary class="title-skill">Ďalšie zručnosti</summary>
+
+                                    <ul class="list-skill">
+                                        <li id="junior" class="item-skill level">Figma</li>
+                                        <li id="middle" class="item-skill level">Scratch</li>
+                                        <li id="junior" class="item-skill level">Matlab</li>
+                                        <li id="middle" class="item-skill level">Video Editing</li>
+                                        <li id="junior" class="item-skill level">Marketing</li>
+                                    </ul>
+                                </details>
+                            </div>
                         </div>
+
+                        <div class="lang-skills card-cv flexbox">
+
+                            <h2 class="title-skills">Jazykové zručnosti</h2>
+                            <div class="wrap-skills flexbox">
+                                <details class="skill">
+                                    <summary class="title-skill">A1 - A2</summary>
+
+                                    <ul class="list-skill">
+                                        <li class="item-skill level ro">Rumunčina</li>
+                                    </ul>
+                                </details>
+
+                                <details class="skill">
+                                    <summary class="title-skill">B1 - B2</summary>
+
+                                    <ul class="list-skill">
+                                        <li  class="item-skill level eng">Angličtina</li>
+                                        <li class="item-skill level sk">Slovenčina</li>
+                                    </ul>
+                                </details>
+
+                                <details class="skill">
+                                    <summary class="title-skill">C1 - C2</summary>
+
+                                    <ul class="list-skill">
+                                        <li class="item-skill level ua">Ukrajinčina</li>
+                                        <li class="item-skill level ru">Ruščina</li>
+                                    </ul>
+                                </details>
+                            </div>
+                        </div>
+
                     </div>
 
 
@@ -197,8 +241,9 @@
             </address>
             <h2 class="year-footer">@2026</h2>
         </div>
-    </footer>
-    
+    </footer>   
+
+    <script src="../js/script.js"></script>
     
 </body>
 </html>

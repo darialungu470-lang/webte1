@@ -57,6 +57,11 @@ body{
 a{
     text-decoration: none;
     color:black;
+    transition: all 0.3s;
+}
+
+a:hover{
+    color:var(--color-brand);
 }
 
 p{
@@ -775,6 +780,7 @@ background-image: url("../icons/javascript.svg");
 
 .contacts{
     flex-direction: column;
+    justify-content: flex-start;
 
     padding: 0 10px;
     background-color: var(--color-cv);
@@ -801,7 +807,6 @@ background-image: url("../icons/javascript.svg");
     flex-direction: column;
     justify-content: center;
     align-items: start;
-
 }
 
 .container-cv .details div{
@@ -814,6 +819,7 @@ background-image: url("../icons/javascript.svg");
     padding-right: 15px;
     margin: 0;
 }
+
 
 /*- Section Biography -*/
 
@@ -881,7 +887,14 @@ background-image: url("../icons/javascript.svg");
 
 /*- Sekcia "Zrucnosti" -*/
 .skills{
-    padding: 10px 80px;
+    display: grid;
+    grid-template-columns: 59% 39%;
+    gap: 2%;
+}
+
+.digital-skills, .lang-skills{
+    padding: 10px 20px;
+    justify-content: flex-start;
 }
 
 .title-skills{
@@ -890,13 +903,12 @@ background-image: url("../icons/javascript.svg");
 }
 
 .skill-levels{
-    gap: 100px;
-
+    gap: 40px;
+    padding: 0;
 }
 
 .level{
     padding-left: 10px;
-    
 }
 
 #junior{ 
@@ -912,10 +924,8 @@ background-image: url("../icons/javascript.svg");
 }
 
 .wrap-skills{
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: flex-start;
-
     width:100%;
 }
 
@@ -932,6 +942,341 @@ background-image: url("../icons/javascript.svg");
 .title-skill::marker{
     color:var(--color-up-down);
 }
+
+.list-skill{
+    margin: 0;
+}
+
+.lang-skills .wrap-skills{
+    margin: 1rem 0;
+    line-height: 2rem;
+}
+
+.item-skill{
+    line-height: 1.5rem;
+}
+
+.ro{
+    list-style-type: "🇷🇴";
+}
+
+.eng{
+    list-style-type: "🇬🇧";
+}
+
+.sk{
+    list-style-type: "🇸🇰";
+}
+
+.ua{
+    list-style-type: "🇺🇦";
+}
+
+.ru{
+    list-style-type: "🇷🇺";
+}
+
+
+
+/*  TABLET – do 900 px */
+
+@media screen and (max-width: 900px) {
+
+    /* Main layout resume */
+    .container-cv {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Contacts */
+    .contacts {
+        min-width: 0;
+        padding: 0 12px;
+    }
+
+    .foto-cv {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .foto-cv:hover {
+        max-width: 210px;
+    }
+
+    .container-cv .details div {
+        flex-direction: column;
+        align-items: start;
+        gap: 4px;
+        overflow-wrap: anywhere;
+    }
+
+    .container-cv .details p {
+        padding-right: 0;
+    }
+
+    .container-cv .details a{
+        font-size: 14px;
+    }
+
+    /* Right part of resume */
+    .contents-cv {
+        min-width: 0;
+        padding: 20px 12px;
+    }
+
+    .cards-cv {
+        gap: 15px;
+    }
+
+    /* Tables */
+    .table-cv {
+        table-layout: fixed;
+        overflow-wrap: anywhere;
+    }
+
+    .th-cv {
+        width: 35%;
+    }
+
+    .title-table-cv {
+        font-size: 18px;
+    }
+
+    /* Skills */
+    .skills {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+    }
+
+    .digital-skills,
+    .lang-skills {
+        min-width: 0;
+        padding: 15px;
+    }
+
+    .skill-levels {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .wrap-skills {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .skill {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .title-skill {
+        overflow-wrap: anywhere;
+    }
+
+    .skill-levels{
+        gap: 30px;
+    }
+}
+
+
+/*  MOBIL – do 600 px */
+
+@media screen and (max-width: 600px) {
+
+    /* Celá stránka */
+    .container-cv {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+        width: 100%;
+    }
+
+    /* Kontakty sa presunú hore */
+    .contacts {
+        align-items: center;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .foto-cv {
+        width: 160px;
+        max-width: 160px;
+        margin: 0 0 15px;
+    }
+
+    .foto-cv:hover {
+        max-width: 160px;
+    }
+
+    .container-cv .details {
+        width: 100%;
+        align-items: center;
+    }
+
+    .container-cv .details div {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 12px;
+        text-align: center;
+    }
+
+    .container-cv .details p {
+        padding: 0;
+    }
+
+    .container-cv .details a {
+        overflow-wrap: anywhere;
+        text-align: center;
+    }
+
+    /* Resume content */
+    .contents-cv {
+        padding: 20px 12px;
+        border-radius: 10px;
+    }
+
+    .title-cv {
+        font-size: 25px;
+        padding-left: 0;
+    }
+
+    .note {
+        font-size: 14px;
+    }
+
+    /* Cards with tables */
+    .cards-cv {
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        gap: 15px;
+        margin: 15px 0;
+    }
+
+    .card-cv {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Tabuľky */
+    .table-cv {
+        width: 100%;
+        padding: 8px;
+        table-layout: fixed;
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .th-cv {
+        width: 38%;
+        padding-right: 8px;
+        vertical-align: top;
+    }
+
+    .table-cv td,
+    .table-cv th {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .title-table-cv {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    /* Digital language skills */
+    .skills {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 15px;
+        width: 100%;
+    }
+
+    .digital-skills,
+    .lang-skills {
+        padding: 15px;
+    }
+
+    .title-skills {
+        font-size: 20px;
+        line-height: 1.4;
+    }
+
+    .skill-levels {
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 0;
+    }
+
+    .level {
+        padding-left: 5px;
+    }
+
+    .wrap-skills {
+        gap: 10px;
+    }
+
+    .skill {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .title-skill {
+        padding: 12px 10px;
+        font-size: 15px;
+    }
+
+    .list-skill {
+        padding-left: 35px;
+    }
+
+    .item-skill {
+        font-size: 14px;
+        line-height: 1.7;
+        overflow-wrap: anywhere;
+    }
+
+    .lang-skills .wrap-skills {
+        margin: 0;
+        line-height: 1.7;
+    }
+}
+
+
+/*  Extra small mobil – do 360 px  */
+
+@media screen and (max-width: 360px) {
+
+    .contents-cv {
+        padding: 15px 8px;
+    }
+
+    .title-cv {
+        font-size: 22px;
+    }
+
+    .table-cv {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .th-cv {
+        width: 40%;
+    }
+
+    .digital-skills,
+    .lang-skills {
+        padding: 12px;
+    }
+
+    .skill-levels {
+        gap: 20px;
+        font-size: 13px;
+    }
+}
+
 
 
 
