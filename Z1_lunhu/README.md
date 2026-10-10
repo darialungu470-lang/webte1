@@ -1,7 +1,7 @@
 Meno: Dariia Lunhu
 Krúžok: API-MSUS
 
-Webová stránka: [doplň odkaz na stránku na školskom serveri]
+Webová stránka: https://webte1.fei.stuba.sk/~xlunhu/Z1_lunhu
 
 
 O projekte

@@ -1,5 +1,5 @@
 /* ------------------------------------------
-        DÁTUMY SEMESTRA
+        SEMESTR DATE
 ------------------------------------------ */
 
 const SEMESTER_START = new Date(2026, 8, 14); // 21.09.2026
@@ -191,7 +191,7 @@ function highlightCurrentClass() {
     let currentClass = null;
     const upcomingClasses = [];
 
-    // Odstránime predchádzajúce zvýraznenie
+    // Remove the previous highlighting
     classes.forEach(element => {
         element.classList.remove("current-class");
 
@@ -207,7 +207,7 @@ function highlightCurrentClass() {
         const name = element.querySelector("span")?.textContent.trim()
             || "Predmet";
 
-        // Ak predmet práve prebieha
+        // If the course is currently in progress
         if (
             classDay === day &&
             currentMinutes >= start &&
@@ -216,7 +216,7 @@ function highlightCurrentClass() {
             currentClass = element;
         }
 
-        // Vypočítame, koľko času zostáva do začiatku hodiny
+        // Calculate the time remaining until the start of the lesson
         let daysUntil = (classDay - day + 7) % 7;
 
         if (daysUntil === 0 && start <= currentMinutes) {
@@ -242,7 +242,7 @@ function highlightCurrentClass() {
         return;
     }
 
-    // Najbližší budúci predmet
+    // Next upcoming subject
     upcomingClasses.sort((a, b) => {
         if (a.daysUntil !== b.daysUntil) {
             return a.daysUntil - b.daysUntil;
@@ -283,13 +283,13 @@ setInterval(highlightCurrentClass, 30000);
 
 
 /* ------------------------------------------
-        PROGRESS BAR SEMESTRA
+        SEMESTR PROGRESS BAR
 ------------------------------------------ */
 
 function updateSemesterProgress() {
     const today = new Date();
 
-    // Porovnávame iba dátumy, nie aktuálne hodiny a minúty.
+    // We are comparing only the dates, not the current hours and minutes.
     today.setHours(0, 0, 0, 0);
 
     const start = new Date(SEMESTER_START);
@@ -308,8 +308,8 @@ function updateSemesterProgress() {
     const endDateText = document.getElementById("semester-end-date");
 
 
-    // Ak stránka neobsahuje prvky rozvrhu a semestra,
-    // funkciu ukončíme.
+    // If the page does not contain schedule and semester elements,
+    // we terminate the function.
     if (
         !schedule || !progress || !message ||
         !percentage || !fill || !bar ||
@@ -323,7 +323,7 @@ function updateSemesterProgress() {
     endDateText.textContent = end.toLocaleDateString("sk-SK");
 
 
-    // Kontrola, či sú dátumy správne.
+    // Check if the dates are correct.
     if (start >= end) {
         schedule.hidden = true;
         progress.hidden = true;
@@ -332,7 +332,7 @@ function updateSemesterProgress() {
         return;
     }
 
-    // Semester ešte nezačal.
+    // The semester hasn't started yet.
     if (today < start) {
         schedule.hidden = true;
         progress.hidden = true;
@@ -344,7 +344,7 @@ function updateSemesterProgress() {
         return;
     }
 
-    // Semester sa už skončil.
+    // The semester has already ended.
     if (today > end) {
         schedule.hidden = true;
         progress.hidden = true;
@@ -356,7 +356,7 @@ function updateSemesterProgress() {
         return;
     }
 
-    // Semester práve prebieha.
+    // The semester is currently underway.
     schedule.hidden = false;
     progress.hidden = false;
     message.textContent = "";
@@ -377,18 +377,18 @@ updateSemesterProgress();
 
 
 /* ------------------------------------------
-                    Mapa
+                    Map
 ------------------------------------------ */
 
 const mapElement = document.getElementById("map");
 
 
-// Výpočet vzdialenosti medzi dvoma bodmi pomocou Haversinovho vzorca.
+// Calculation of the distance between two points using the Haversine formula.
 function haversineDistance(lat1, lon1, lat2, lon2) {
-    // Polomer Zeme v metroch.
+    // Earth's radius in meters.
     const earthRadius = 6371000;
 
-    // Prevod stupňov na radiány.
+    // Convert degrees to radians.
     const toRadians = function (degrees) {
         return degrees * Math.PI / 180;
     };
@@ -423,7 +423,7 @@ if (mapElement) {
         14 
     );
 
-    // Pri zmene veľkosti okna upravíme vykreslenie mapy.
+    // Adjust the map rendering when the window is resized.
     window.addEventListener("resize", function () {
         map.invalidateSize();
     });
@@ -438,10 +438,10 @@ if (mapElement) {
 
     const pointsList = document.getElementById("map-points-list");
 
-    // Všetky vytvorené body uchovávame v poli. 
+    // We store all created points in an array.
     const points = [];
 
-    // Zistí, či používateľ pridal aspoň jedno vlastné miesto.
+    // Checks whether the user has added at least one custom location.
     function updateEmptyState() {
         const hasUserPoints = points.some(function (point) {
             return point.removable;
@@ -455,7 +455,7 @@ if (mapElement) {
 
     const STORAGE_KEY = "map-user-points";
 
-    // Uloží vlastné body do localStorage.
+    // Saves custom points to localStorage.
     function saveUserPoints() {
         const userPoints = points
             .filter(function (point) {
@@ -475,7 +475,7 @@ if (mapElement) {
         );
     }
 
-    // Načíta vlastné body po otvorení stránky.
+    // Loads custom points after the page opens.
     function loadUserPoints() {
         try {
             const savedPoints = JSON.parse(
@@ -507,7 +507,7 @@ if (mapElement) {
     }
 
 
-    // Funkcia na pridanie bodu do mapy aj zoznamu. 
+    // Function to add a point to both the map and the list.
     function addPoint(name, lat, lng, removable = false) { 
         const marker = L.marker([lat, lng]).addTo(map); 
         
@@ -523,7 +523,7 @@ if (mapElement) {
 
         points.push(point);
 
-        // Vytvoríme položku v zozname. 
+        // We create an item in the list.
         const option = document.createElement("option"); 
         option.value = points.length - 1; 
         option.textContent = name; 
@@ -532,14 +532,14 @@ if (mapElement) {
         updateEmptyState();
     }
 
-    // Pôvodné pevné body. 
+    // Original fixed points. 
     addPoint("FEI STU – moja škola", 48.151965, 17.072995); 
     addPoint("Moje bydlisko", 48.1455, 17.1050);
 
-    // Obnovíme vlastné miesta z localStorage.
+    // Restore custom locations from localStorage.
     loadUserPoints();
 
-    // Prvky na pridávanie nového miesta. 
+    // Elements for adding a new location.
     const pointNameInput = document.getElementById("new-point-name"); 
     const addPointButton = document.getElementById("add-point-button"); 
     const mapMessage = document.getElementById("map-message");
@@ -547,7 +547,7 @@ if (mapElement) {
     // Súradnice miesta, na ktoré používateľ klikol. 
     let newPointLocation = null;
 
-    // Kliknutie na mapu vyberie polohu nového miesta. 
+    // Coordinates of the location the user clicked on. 
     map.on("click", function (event) { 
         newPointLocation = event.latlng;
 
@@ -556,7 +556,7 @@ if (mapElement) {
         pointNameInput.focus(); 
     });
 
-    // Pridanie miesta po kliknutí na tlačidlo. 
+    // Adding a location after clicking the button.
     addPointButton.addEventListener("click", function () { 
         const name = pointNameInput.value.trim();
 
@@ -580,7 +580,7 @@ if (mapElement) {
     });
 
 
-    // Výber bodu zo zoznamu. 
+    // Selecting a point from the list. 
     pointsList.addEventListener("change", function () { 
         const index = Number(this.value);
 
@@ -598,10 +598,10 @@ if (mapElement) {
         point.marker.openPopup(); 
     }); 
 
-    // Tlačidlo na odstránenie vybraného bodu.
+    // Button to remove the selected point.
     const removePointButton = document.getElementById("remove-point-button");
 
-    // Tlačidlo sa aktivuje iba pri výbere vlastného bodu.
+    // The button is activated only when a custom point is selected.
     pointsList.addEventListener("change", function () {
         const index = Number(this.value);
         const point = points[index];
@@ -610,7 +610,7 @@ if (mapElement) {
     });
 
 
-    // Odstránenie bodu z mapy aj zo zoznamu.
+    // Removing the point from both the map and the list.
     removePointButton.addEventListener("click", function () {
         const index = Number(pointsList.value);
         const point = points[index];
@@ -619,24 +619,24 @@ if (mapElement) {
             return;
         }
 
-        // Odstránime marker z mapy.
+        // Remove the marker from the map.
         map.removeLayer(point.marker);
 
-        // Odstránime položku zo zoznamu.
+        // Remove the item from the list.
         pointsList.remove(index + 1);
 
-        // Odstránime bod z poľa.
+        // Remove the point from the array.
         points.splice(index, 1);
         saveUserPoints();
 
-        // Aktualizujeme hodnoty v zozname.
+        // Updating the values ​​in the list.
         Array.from(pointsList.options).forEach(function (option, i) {
             if (i > 0) {
                 option.value = i - 1;
             }
         });
 
-        // Vrátime výber na úvodnú možnosť.
+        // We will revert the selection to the initial option.
         pointsList.value = "";
         removePointButton.disabled = true;
 
@@ -645,14 +645,14 @@ if (mapElement) {
     });
 
 
-    // Výber cieľa a zobrazenie vzdialenosti.
+    // Destination selection and distance display.
     const distanceFrom = document.getElementById("distance-from");
     const distanceTo = document.getElementById("distance-to");
     const distanceResult = document.getElementById("distance-result");
 
     let distanceLine = null;
 
-    // Naplníme oba výbery všetkými miestami.
+    // We populate both selections with all locations.
     function updateDistanceOptions() {
         const previousFrom = distanceFrom.value;
         const previousTo = distanceTo.value;
@@ -673,7 +673,7 @@ if (mapElement) {
             });
         });
 
-        // Zachováme výber, ak dané miesto stále existuje.
+        // We will preserve the selection if the given location still exists.
         if (previousFrom !== "" && points[Number(previousFrom)]) {
             distanceFrom.value = previousFrom;
         }
@@ -683,7 +683,7 @@ if (mapElement) {
         }
     }
 
-    // Vypočítame vzdialenosť medzi dvoma vybranými bodmi.
+    // We calculate the distance between two selected points.
     function showDistance() {
         const fromIndex = distanceFrom.value;
         const toIndex = distanceTo.value;
@@ -735,12 +735,12 @@ if (mapElement) {
                 maximumFractionDigits: 2
             }) + " km.";
 
-        // Odstránime starú spojnicu.
+        // Remove the old connector.
         if (distanceLine) {
             map.removeLayer(distanceLine);
         }
 
-        // Vykreslíme novú spojnicu.
+        // Draw a new connecting line.
         distanceLine = L.polyline(
             [
                 [from.lat, from.lng],
