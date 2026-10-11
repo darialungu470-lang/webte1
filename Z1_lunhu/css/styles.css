@@ -403,11 +403,11 @@ background-position: center;
 }
 
 #cooking::before {
-background-image: url("../icons/books.svg");
+background-image: url("../icons/pot.svg");
 }
 
 #romane::before {
-background-image: url("../icons/pot.svg");
+background-image: url("../icons/books.svg");
 }
 
 #programing::before {
