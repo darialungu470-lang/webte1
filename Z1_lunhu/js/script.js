@@ -109,21 +109,11 @@ menuButton.addEventListener("click", () => {
              TIME AND DATE
 ------------------------------------------ */
 
-// function updateCurrentTime() {
-//     const now = new Date();
-
-//     document.getElementById('current-time').innerHTML = now.toLocaleTimeString();
-//     document.getElementById('current-date').innerHTML = now.toLocaleDateString();
-// }
-
-// updateCurrentTime();
-// setInterval(updateCurrentTime, 1000);
-
 function updateCurrentTime() { 
     const timeElement = document.getElementById("current-time"); 
     const dateElement = document.getElementById("current-date"); 
     
-    // Ak stránka nemá hodiny a dátum, nič neurobíme. 
+    // Ak stranka nema hodiny a datum, nic neurobime. 
     if (!timeElement || !dateElement) { 
         return; 
     } 
