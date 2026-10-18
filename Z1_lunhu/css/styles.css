@@ -912,15 +912,15 @@ background-image: url("../icons/javascript.svg");
     padding-left: 10px;
 }
 
-#junior{ 
+.junior{ 
     list-style-type: "\1F7E2";
 }
 
-#middle{
+.middle{
     list-style-type: "\1F7E1";
 }
 
-#senior{
+.senior{
     list-style-type: "\1F7E3";
 }
 

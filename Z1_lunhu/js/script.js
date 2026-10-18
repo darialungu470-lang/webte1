@@ -143,19 +143,19 @@ function setActiveButton(button) {
 
 function allClasses(button){
     setActiveButton(button);
-    document.querySelectorAll("#practice, #lecture").forEach(element => element.style.display = "");
+    document.querySelectorAll(".practice, .lecture").forEach(element => element.style.display = "");
 }
 
 function onlyLectures(button){
     setActiveButton(button);
     allClasses(button);
-    document.querySelectorAll("#practice").forEach(element => element.style.display = "none");
+    document.querySelectorAll(".practice").forEach(element => element.style.display = "none");
 }
 
 function onlyPractice(button){
     setActiveButton(button);
     allClasses(button);
-    document.querySelectorAll("#lecture").forEach(element => element.style.display = "none");
+    document.querySelectorAll(".lecture").forEach(element => element.style.display = "none");
 }
 
 /* ------------------------------------------
