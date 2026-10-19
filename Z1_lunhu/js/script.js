@@ -113,7 +113,7 @@ function updateCurrentTime() {
     const timeElement = document.getElementById("current-time"); 
     const dateElement = document.getElementById("current-date"); 
     
-    // Ak stranka nema hodiny a datum, nic neurobime. 
+    // If the page doesn't have a time and date, there's nothing we can do. 
     if (!timeElement || !dateElement) { 
         return; 
     } 
