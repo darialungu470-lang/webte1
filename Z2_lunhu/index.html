@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Obedové menu</title>
+
+    <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
-    
+    <main>
+        <h1>Obedové menu v okolí fakulty</h1>
+
+        <section id="menu-section">
+            <h2>Jedálne</h2>
+
+            <div class="restaurant-filter">
+                <label for="restaurant-select">
+                    Vyber reštauráciu:
+                </label>
+
+                <select id="restaurant-select">
+                    <option value="eatandmeet">Eat & Meet</option>
+                    <option value="fiitfood">FIITFOOD</option>
+                    <option value="riviera">Riviera</option>
+                </select>
+            </div>
+
+            <button id="refresh-menu" type="button">
+                Obnoviť menu
+            </button>
+
+            <button id="clear-cache" type="button">
+                Vymazať uložené údaje
+            </button>
+
+            <p id="menu-status" role="status" aria-live="polite"></p>
+
+            <div id="day-buttons" aria-label="Výber dňa"></div>
+
+            <div id="menu-container">
+                <p>Načítavam jedálny lístok...</p>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="./js/main.js"></script>
 </body>
+
 </html>
