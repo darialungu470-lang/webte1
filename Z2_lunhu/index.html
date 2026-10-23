@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>Obedové menu</title>
 
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+
     <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="icon" type="image/png" href="./icons/favicon.png">
+    
 </head>
 
 <body>
@@ -36,6 +44,48 @@
 
             <p id="menu-status" role="status" aria-live="polite"></p>
 
+
+            <p class="menu-notice">
+                <strong>Upozornenie:</strong>
+                Jedálne lístky pochádzajú z lokálne uložených
+                údajov reštaurácií. Aktuálnu ponuku a ceny
+                si pred návštevou overte na oficiálnej
+                webovej stránke reštaurácie.
+            </p>
+
+
+            <div class="restaurant-links">
+                <p>Aktuálne menu nájdete na oficiálnych stránkach:</p>
+
+                <ul>
+                    <li>
+                        <a href="https://eatandmeet.sk/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            Eat & Meet
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.freefood.sk/menu/#fiit-food"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            FIITFOOD
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://restauraciariviera.sk/obedove-menu/"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            Riviera
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+
             <div id="day-buttons" aria-label="Výber dňa"></div>
 
             <div id="menu-container">
@@ -43,6 +93,9 @@
             </div>
         </section>
     </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js"></script>
 
     <script type="module" src="./js/main.js"></script>
 </body>

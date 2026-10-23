@@ -1,5 +1,3 @@
-console.log("TEST: main.js sa spustil");
-
 import { parseEatAndMeet } from "./parsers/eatandmeet.js";
 import { parseFiitfood } from "./parsers/fiitfood.js";
 import { parseRiviera } from "./parsers/riviera.js";
@@ -63,7 +61,6 @@ async function loadEatAndMeet(forceRefresh = false) {
 
             if (cachedMenu) {
                 displayMenu(cachedMenu);
-                console.log("Menu načítané z localStorage");
                 return;
             }
         }
@@ -78,11 +75,7 @@ async function loadEatAndMeet(forceRefresh = false) {
         // 2. Prevedieme odpoveď na text
         const html = await response.text();
 
-        console.log("OBSAH HTML:", html);
 
-        console.log("Dĺžka HTML:", html.length);
-        console.log("Obsahuje day-1:", html.includes("day-1"));
-        console.log("Obsahuje menu-details:", html.includes("menu-details"));
 
         // 3. Z HTML textu vytvoríme DOM dokument
         const doc = new DOMParser().parseFromString(
@@ -101,16 +94,8 @@ async function loadEatAndMeet(forceRefresh = false) {
         displayMenu(result);
 
         // 5. Zobrazíme výsledok
-        console.log("Eat & Meet:", result);
         displayMenu(result);
 
-        console.table(
-            result.days.map(day => ({
-                den: day.day,
-                pocetJedal: day.meals.length,
-                prveJedlo: day.meals[0]?.name
-            }))
-        );
 
     } catch (error) {
         console.error("Nepodarilo sa načítať menu:", error);
@@ -136,7 +121,6 @@ async function loadFiitfood(forceRefresh = false) {
 
                 if (data.date === getTodayDate()) {
                     displayMenu(data.menu);
-                    console.log("FIITFOOD načítaný z localStorage");
                     return;
                 }
             }
@@ -191,7 +175,6 @@ async function loadRiviera(forceRefresh = false) {
 
                 if (data.date === getTodayDate()) {
                     displayMenu(data.menu);
-                    console.log("Riviera načítaná z localStorage");
                     return;
                 }
             }
@@ -363,7 +346,7 @@ function displayMenu(data) {
 
 
 
-        const today = new Date();
+        const today = dayjs();
 
         const dateMatch = day.date?.match(
             /^(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?$/
@@ -374,6 +357,7 @@ function displayMenu(data) {
         if (dateMatch) {
             const dayNumber = Number(dateMatch[1]);
             const monthNumber = Number(dateMatch[2]);
+            
             const year = dateMatch[3] ? Number(dateMatch[3]) : today.getFullYear();
 
             isToday =
@@ -504,12 +488,15 @@ function displayMenu(data) {
     
     const dayButtons = buttonsContainer.querySelectorAll("button");
 
-    const today = new Date();
+
+    const today = dayjs();
+
+    // Pondelok = 0, utorok = 1, ..., nedeľa = 6
     const todayIndex = (today.getDay() + 6) % 7;
 
-    const currentDay = String(today.getDate()).padStart(2, "0");
-    const currentMonth = String(today.getMonth() + 1).padStart(2, "0");
-    const currentYear = String(today.getFullYear());
+    const currentDay = today.format("DD");
+    const currentMonth = today.format("MM");
+    const currentYear = today.format("YYYY");
 
     const matchingIndex = data.days.findIndex(day => {
         if (!day.date) return false;
@@ -587,7 +574,6 @@ clearCacheButton.addEventListener("click", () => {
         menuStatus.textContent =
             "Uložené údaje vybranej reštaurácie boli vymazané.";
 
-        console.log("Cache vymazaná pre:", selectedRestaurant);
 
     } catch (error) {
         menuStatus.textContent =
@@ -602,43 +588,6 @@ loadEatAndMeet().catch(error => {
     console.error("CHYBA PRI SPUSTENÍ:", error);
 });
 
-
-
-
-
-async function testFiitfood() {
-    try {
-        // Načítame lokálny HTML súbor FIITFOOD
-        const response = await fetch("./data/fiitfood.html");
-
-        if (!response.ok) {
-            throw new Error(`HTTP chyba: ${response.status}`);
-        }
-
-        // HTML prevedieme na DOM dokument
-        const html = await response.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-
-        // Zavoláme náš nový parser
-        const result = parseFiitfood(doc);
-
-        console.log("FIITFOOD:", result);
-
-        console.table(
-            result.days.map(day => ({
-                den: day.day,
-                datum: day.date,
-                pocetJedal: day.meals.length,
-                prveJedlo: day.meals[0]?.name
-            }))
-        );
-
-    } catch (error) {
-        console.error("Chyba pri načítaní FIITFOOD:", error);
-    }
-}
-
-testFiitfood();
 
 
 
@@ -673,49 +622,3 @@ restaurantSelect.addEventListener("change", async () => {
         restaurantSelect.disabled = false;
     }
 });
-
-
-
-
-
-
-
-
-async function testRiviera() {
-    try {
-        const response = await fetch("./data/riviera.html");
-
-        if (!response.ok) {
-            throw new Error(`HTTP chyba: ${response.status}`);
-        }
-
-        const html = await response.text();
-
-        const doc = new DOMParser().parseFromString(
-            html,
-            "text/html"
-        );
-
-        const result = parseRiviera(doc);
-
-
-        console.log("RIVIERA BUSINESS MENU:", result.businessMenu);
-
-        console.log("RIVIERA – KONTROLA:", result.restaurant);
-
-        console.table(result.days.map(day => ({
-            den: day.day,
-            datum: day.date,
-            pocetJedal: day.meals.length,
-            prveJedlo: day.meals[0]?.name ?? "Žiadne"
-        })));
-
-        console.log("RIVIERA:", result);
-        console.table(result.days);
-
-    } catch (error) {
-        console.error("Chyba pri testovaní Riviera:", error);
-    }
-}
-
-testRiviera();

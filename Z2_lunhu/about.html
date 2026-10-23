@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Informácie o aplikácii Obedové menu, ktorá zobrazuje ponuky reštaurácií v okolí fakulty.">
+
+    <title>O aplikácii | Obedové menu</title>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    >
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <link rel="icon" type="image/png" href="./icons/favicon.png">
+</head>
+
+<body>
+    <header>
+        <nav class="main-nav" aria-label="Hlavná navigácia">
+            <a href="./index.html">Obedové menu</a>
+            <a href="./about.html" aria-current="page">O aplikácii</a>
+        </nav>
+    </header>
+
+    <main class="about-page">
+        <h1>O aplikácii</h1>
+
+        <section>
+            <h2>Čo je Obedové menu?</h2>
+            <p>
+                Obedové menu je webová aplikácia, ktorá
+                zhromažďuje jedálne lístky reštaurácií
+                v okolí fakulty na jednom mieste.
+            </p>
+            <p>
+                Cieľom aplikácie je uľahčiť študentom
+                a zamestnancom výber obeda bez potreby
+                navštevovať viacero webových stránok.
+            </p>
+        </section>
+
+        <section>
+            <h2>Podporované reštaurácie</h2>
+
+            <ul>
+                <li>Eat & Meet</li>
+                <li>FIITFOOD</li>
+                <li>Reštaurácia Riviera</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Funkcie aplikácie</h2>
+
+            <ul>
+                <li>Výber reštaurácie a dňa v týždni</li>
+                <li>Zobrazenie jedál, cien a alergénov</li>
+                <li>Automatické zvýraznenie dnešného dňa</li>
+                <li>Ukladanie údajov do localStorage</li>
+                <li>Responzívne zobrazenie pre mobil a počítač</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Zdroj údajov</h2>
+
+            <p>
+                Jedálne lístky pochádzajú z webových stránok
+                jednotlivých reštaurácií.
+            </p>
+
+            <p>
+                Aktuálna verzia aplikácie spracováva lokálne
+                uložené HTML súbory. Obnovenie menu preto
+                nezaručuje získanie najnovších údajov
+                z webových stránok reštaurácií.
+            </p>
+        </section>
+
+
+    <section class="contact-section" id="contact">
+        <h2>Kontaktujte nás</h2>
+
+        <p>
+            Máte otázku, pripomienku alebo návrh na zlepšenie?
+            Napíšte nám!
+        </p>
+
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="contact-name">Meno *</label>
+                <input
+                    type="text"
+                    id="contact-name"
+                    name="name"
+                    autocomplete="name"
+                    required
+                    minlength="2"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="contact-email">E-mail *</label>
+                <input
+                    type="email"
+                    id="contact-email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="contact-subject">Predmet *</label>
+                <select id="contact-subject" name="subject" required>
+                    <option value="">Vyberte predmet</option>
+                    <option value="question">Otázka</option>
+                    <option value="suggestion">Návrh na zlepšenie</option>
+                    <option value="problem">Nahlásenie problému</option>
+                    <option value="other">Iné</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-message">Správa *</label>
+                <textarea
+                    id="contact-message"
+                    name="message"
+                    rows="5"
+                    required
+                    minlength="10"
+                ></textarea>
+            </div>
+
+            <button type="submit" id="contact-submit">
+                Odoslať správu
+            </button>
+
+            <p id="contact-status" role="status" aria-live="polite"></p>
+        </form>
+    </section>
+
+    </main>
+
+    <footer>
+        <p>Obedové menu – študentský webový projekt</p>
+    </footer>
+
+    <script src="./js/contact.js" defer></script>
+</body>
+</html>
