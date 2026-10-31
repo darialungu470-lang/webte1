@@ -358,14 +358,14 @@ function displayMenu(data) {
             const dayNumber = Number(dateMatch[1]);
             const monthNumber = Number(dateMatch[2]);
             
-            const year = dateMatch[3] ? Number(dateMatch[3]) : today.getFullYear();
+            const year = dateMatch[3] ? Number(dateMatch[3]) : today.year();
 
             isToday =
-                dayNumber === today.getDate() &&
-                monthNumber === today.getMonth() + 1 &&
-                year === today.getFullYear();
+                dayNumber === today.date() &&
+                monthNumber === today.month() + 1 &&
+                year === today.year();
         } else if (!day.date) {
-            isToday = index === (today.getDay() + 6) % 7;
+            isToday = index === (today.day() + 6) % 7;
         }
 
         if (isToday) {
@@ -492,7 +492,7 @@ function displayMenu(data) {
     const today = dayjs();
 
     // Pondelok = 0, utorok = 1, ..., nedeľa = 6
-    const todayIndex = (today.getDay() + 6) % 7;
+    const todayIndex = (today.day() + 6) % 7;
 
     const currentDay = today.format("DD");
     const currentMonth = today.format("MM");

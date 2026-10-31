@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <title>Obedové menu</title>
 
+    <!-- Bootstrap CSS -->
     <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
     >
+   
 
     <link rel="stylesheet" href="./css/style.css">
 
@@ -16,82 +18,110 @@
 </head>
 
 <body>
-    <main>
+    <header id = "header">
         <h1>Obedové menu v okolí fakulty</h1>
 
-        <section id="menu-section">
-            <h2>Jedálne</h2>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">About Us</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-            <div class="restaurant-filter">
-                <label for="restaurant-select">
-                    Vyber reštauráciu:
-                </label>
+    <main>
+        <div class="container">
+            <section id="menu-section">
+                <p class="menu-notice">
+                    <strong>Upozornenie:</strong>
+                    Jedálne lístky pochádzajú z lokálne uložených
+                    údajov reštaurácií. Aktuálnu ponuku a ceny
+                    si pred návštevou overte na oficiálnej
+                    webovej stránke reštaurácie.
+                </p>
 
-                <select id="restaurant-select">
-                    <option value="eatandmeet">Eat & Meet</option>
-                    <option value="fiitfood">FIITFOOD</option>
-                    <option value="riviera">Riviera</option>
-                </select>
-            </div>
+                <div class="btn-container">
+                    <div class="restaurant-filter">
+                        <h2>Jedálne</h2>
 
-            <button id="refresh-menu" type="button">
-                Obnoviť menu
-            </button>
+                        <label for="restaurant-select">
+                            Vyber reštauráciu:
+                        </label>
 
-            <button id="clear-cache" type="button">
-                Vymazať uložené údaje
-            </button>
+                        <select id="restaurant-select">
+                            <option value="eatandmeet">Eat & Meet</option>
+                            <option value="fiitfood">FIITFOOD</option>
+                            <option value="riviera">Riviera</option>
+                        </select>
 
-            <p id="menu-status" role="status" aria-live="polite"></p>
+                        <div >
+                            <button id="refresh-menu" type="button">
+                                Obnoviť menu
+                            </button>
+
+                            <button id="clear-cache" type="button">
+                                Vymazať uložené údaje
+                            </button>
+                        </div>
+                        
+
+                        <p id="menu-status" role="status" aria-live="polite"></p>
+                    </div>
 
 
-            <p class="menu-notice">
-                <strong>Upozornenie:</strong>
-                Jedálne lístky pochádzajú z lokálne uložených
-                údajov reštaurácií. Aktuálnu ponuku a ceny
-                si pred návštevou overte na oficiálnej
-                webovej stránke reštaurácie.
-            </p>
-
-
-            <div class="restaurant-links">
-                <p>Aktuálne menu nájdete na oficiálnych stránkach:</p>
-
-                <ul>
-                    <li>
-                        <a href="https://eatandmeet.sk/"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                            Eat & Meet
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="http://www.freefood.sk/menu/#fiit-food"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                            FIITFOOD
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="https://restauraciariviera.sk/obedove-menu/"
-                        target="_blank"
-                        rel="noopener noreferrer">
-                            Riviera
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    <div id="day-buttons" aria-label="Výber dňa"></div>
+                </div>
+                
 
 
 
-            <div id="day-buttons" aria-label="Výber dňa"></div>
 
-            <div id="menu-container">
-                <p>Načítavam jedálny lístok...</p>
-            </div>
-        </section>
+                <div id="menu-container">
+                    <p>Načítavam jedálny lístok...</p>
+                </div>
+
+
+
+
+                <div class="restaurant-links">
+                    <p>Aktuálne menu nájdete na oficiálnych stránkach:</p>
+
+                    <ul>
+                        <li>
+                            <a href="https://eatandmeet.sk/"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                                Eat & Meet
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="http://www.freefood.sk/menu/#fiit-food"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                                FIITFOOD
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="https://restauraciariviera.sk/obedove-menu/"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                                Riviera
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+        
+        
+
+        
     </main>
 
 

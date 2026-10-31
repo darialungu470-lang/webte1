@@ -9,10 +9,12 @@
 
     <title>O aplikácii | Obedové menu</title>
 
+    <!-- Bootstrap CSS -->
     <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
     >
+
 
     <link rel="stylesheet" href="./css/style.css">
 
@@ -20,10 +22,18 @@
 </head>
 
 <body>
-    <header>
-        <nav class="main-nav" aria-label="Hlavná navigácia">
-            <a href="./index.html">Obedové menu</a>
-            <a href="./about.html" aria-current="page">O aplikácii</a>
+    <header id = "header">
+        <h1>Obedové menu v okolí fakulty</h1>
+
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">About Us</a>
+                </li>
+            </ul>
         </nav>
     </header>
 
