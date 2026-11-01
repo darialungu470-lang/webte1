@@ -275,7 +275,7 @@ img {
 .business-menu {
     margin-bottom: 24px;
     padding: 20px;
-    border: 2px solid #8b7355;
+    border: 2px solid var(--color-link);
     border-radius: 12px;
 }
 
