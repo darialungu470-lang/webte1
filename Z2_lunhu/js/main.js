@@ -1,11 +1,34 @@
+/**
+ * Main application module for the FEI STU lunch-menu website.
+ *
+ * Responsibilities:
+ * - Load locally stored restaurant HTML snapshots.
+ * - Parse menus and cache results for the current date.
+ * - Render menus and accessible day-selection controls.
+ * - Handle restaurant switching, refresh, and cache removal.
+ *
+ * Note: Refreshing loads local HTML snapshots, not live restaurant websites.
+ */
+
+
+// ============================================================
+// PARSER IMPORTS
+// Each parser extracts menu data from one restaurant format.
+// ============================================================
+
 import { parseEatAndMeet } from "./parsers/eatandmeet.js";
 import { parseFiitfood } from "./parsers/fiitfood.js";
 import { parseRiviera } from "./parsers/riviera.js";
 
 
-
+// ============================================================
+// CACHE CONFIGURATION AND DATE HELPERS
+// Store parsed menus with the date on which they were loaded.
+// ============================================================
 
 const CACHE_KEY = "eatandmeet-menu";
+const FIITFOOD_CACHE_KEY = "fiitfood-menu";
+const RIVIERA_CACHE_KEY = "riviera-menu";
 
 function getTodayDate() {
     const date = new Date();
@@ -49,7 +72,10 @@ function saveMenuToCache(menu) {
 }
 
 
-
+// ============================================================
+// LAST-UPDATED TIMESTAMPS
+// Track successful local HTML loads separately for each restaurant.
+// ============================================================
 
 function saveLastUpdated(restaurant) {
     const timestamp = new Date().toISOString();
@@ -68,10 +94,36 @@ function getLastUpdated(restaurant) {
     );
 }
 
+function displayLastUpdated(timestamp) {
+    const element = document.getElementById("last-updated");
 
+    if (!element) return;
+
+    if (!timestamp) {
+        element.textContent = "Posledná aktualizácia: neznáma";
+        return;
+    }
+
+    const date = new Date(timestamp);
+
+    if (Number.isNaN(date.getTime())) {
+        element.textContent = "Posledná aktualizácia: neznáma";
+        return;
+    }
+
+    element.textContent =
+        `Posledná aktualizácia: ${date.toLocaleString("sk-SK")}`;
+}
+
+
+// ============================================================
+// MENU LOADING: EAT & MEET
+// Fetch a local HTML snapshot and parse the restaurant menu.
+// ============================================================
 
 async function loadEatAndMeet(forceRefresh = false) {
     try {
+        // Use cached data unless the user requests a refresh.
         if (!forceRefresh) {
             const cachedMenu = getCachedMenu();
 
@@ -86,36 +138,34 @@ async function loadEatAndMeet(forceRefresh = false) {
             }
         }
 
-        // 1. Načítame HTML súbor
+        // Load the locally stored HTML document.
         const response = await fetch("./data/eatandmeet.html");
 
         if (!response.ok) {
             throw new Error(`HTTP chyba: ${response.status}`);
         }
 
-        // 2. Prevedieme odpoveď na text
         const html = await response.text();
 
-        // 3. Vytvoríme DOM dokument
+        // Convert HTML text into a document that can be queried.
         const doc = new DOMParser().parseFromString(
             html,
             "text/html"
         );
 
-        // 4. Spracujeme HTML parserom
+        // Extract the structured menu using the restaurant parser.
         const result = parseEatAndMeet(doc);
 
         if (result.days.length === 0) {
             throw new Error("Parser nenašiel žiadne dni.");
         }
 
-        // 5. Uložíme menu do cache
+        // Save the parsed menu and update the loading timestamp.
         saveMenuToCache(result);
 
-        // 6. Uložíme čas úspešného načítania
         const timestamp = saveLastUpdated("eatandmeet");
 
-        // 7. Zobrazíme menu a čas
+        // Display the menu and the timestamp.
         displayMenu(result);
         displayLastUpdated(timestamp);
 
@@ -126,16 +176,14 @@ async function loadEatAndMeet(forceRefresh = false) {
 }
 
 
-
-
-
-
-const FIITFOOD_CACHE_KEY = "fiitfood-menu";
-
+// ============================================================
+// MENU LOADING: FIITFOOD
+// Cache the parsed menu for the current date.
+// ============================================================
 
 async function loadFiitfood(forceRefresh = false) {
     try {
-        // Skúsime načítať dnešné uložené menu
+        // Check for a valid cached menu.
         if (!forceRefresh) {
             const cached = localStorage.getItem(FIITFOOD_CACHE_KEY);
 
@@ -154,7 +202,7 @@ async function loadFiitfood(forceRefresh = false) {
             }
         }
 
-        // Načítame HTML
+        // Load the local HTML snapshot.
         const response = await fetch("./data/fiitfood.html");
 
         if (!response.ok) {
@@ -163,13 +211,15 @@ async function loadFiitfood(forceRefresh = false) {
 
         const html = await response.text();
         const doc = new DOMParser().parseFromString(html, "text/html");
+
+        // Parse the restaurant-specific HTML structure.
         const result = parseFiitfood(doc);
 
         if (result.days.length === 0) {
             throw new Error("FIITFOOD: parser nenašiel žiadne dni.");
         }
 
-        // Uložíme menu do localStorage
+        // Store the menu in localStorage.
         localStorage.setItem(
             FIITFOOD_CACHE_KEY,
             JSON.stringify({
@@ -178,13 +228,10 @@ async function loadFiitfood(forceRefresh = false) {
             })
         );
 
-        // Uložíme čas úspešného načítania
         const timestamp = saveLastUpdated("fiitfood");
 
-        // Zobrazíme menu a dátum aktualizácie
         displayMenu(result);
         displayLastUpdated(timestamp);
-
     } catch (error) {
         console.error("Chyba pri načítaní FIITFOOD:", error);
         throw error;
@@ -192,16 +239,14 @@ async function loadFiitfood(forceRefresh = false) {
 }
 
 
-
-
-
-
-
-const RIVIERA_CACHE_KEY = "riviera-menu";
-
+// ============================================================
+// MENU LOADING: RIVIERA
+// Fetch, parse, cache, and display the Riviera menu.
+// ============================================================
 
 async function loadRiviera(forceRefresh = false) {
     try {
+        // Reuse cached data when available.
         if (!forceRefresh) {
             const cached = localStorage.getItem(RIVIERA_CACHE_KEY);
 
@@ -210,16 +255,13 @@ async function loadRiviera(forceRefresh = false) {
 
                 if (data.date === getTodayDate()) {
                     displayMenu(data.menu);
-
-                    displayLastUpdated(
-                        getLastUpdated("riviera")
-                    );
-
+                    displayLastUpdated(getLastUpdated("riviera"));
                     return;
                 }
             }
         }
 
+        // Load the local Riviera HTML snapshot.
         const response = await fetch("./data/riviera.html");
 
         if (!response.ok) {
@@ -229,11 +271,14 @@ async function loadRiviera(forceRefresh = false) {
         const html = await response.text();
         const doc = new DOMParser().parseFromString(html, "text/html");
 
+        // Extract structured menu data.
         const result = parseRiviera(doc);
 
         if (result.days.length === 0) {
             throw new Error("Riviera: parser nenašiel žiadne dni.");
         }
+
+        // Save the parsed menu for the current date.
 
         localStorage.setItem(
             RIVIERA_CACHE_KEY,
@@ -243,12 +288,10 @@ async function loadRiviera(forceRefresh = false) {
             })
         );
 
-        // Uložíme čas úspešného načítania
         const timestamp = saveLastUpdated("riviera");
 
         displayMenu(result);
         displayLastUpdated(timestamp);
-
     } catch (error) {
         console.error("Chyba pri načítaní Riviera:", error);
         throw error;
@@ -256,13 +299,9 @@ async function loadRiviera(forceRefresh = false) {
 }
 
 
-
-
-
-
-
-
-
+// ============================================================
+// DATE AND MENU FORMATTING HELPERS
+// ============================================================
 
 function formatMenuDate(dateString) {
     if (!dateString) return "";
@@ -673,23 +712,3 @@ restaurantSelect.addEventListener("change", async () => {
 
 
 
-function displayLastUpdated(timestamp) {
-    const element = document.getElementById("last-updated");
-
-    if (!element) return;
-
-    if (!timestamp) {
-        element.textContent = "Posledná aktualizácia: neznáma";
-        return;
-    }
-
-    const date = new Date(timestamp);
-
-    if (Number.isNaN(date.getTime())) {
-        element.textContent = "Posledná aktualizácia: neznáma";
-        return;
-    }
-
-    element.textContent =
-        `Posledná aktualizácia: ${date.toLocaleString("sk-SK")}`;
-}
