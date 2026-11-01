@@ -321,24 +321,16 @@ function formatMenuDate(dateString) {
         : `${day}. ${month}.`;
 }
 
-
-
-
-
-
-
-
-
-
+// ============================================================
+// MENU RENDERING
+// Create DOM elements from the parsed restaurant data.
+// ============================================================
 
 function displayMenu(data) {
     const container = document.getElementById("menu-container");
 
     container.innerHTML = "";
 
-
-
-    
     const hasMeals = data.days?.some(day =>
         Array.isArray(day.meals) && day.meals.length > 0
     );
@@ -356,10 +348,6 @@ function displayMenu(data) {
 
         return;
     }
-
-
-    
-
 
     if (data.businessMenu) {
         const business = data.businessMenu;
@@ -386,10 +374,6 @@ function displayMenu(data) {
         card.append(heading, soup, meal, details, price);
         container.appendChild(card);
     }
-
-
-
-
 
     const buttonsContainer = document.getElementById("day-buttons");
     buttonsContainer.replaceChildren();
@@ -428,8 +412,6 @@ function displayMenu(data) {
         button.type = "button";
         button.textContent = day.day;
 
-
-
         const today = dayjs();
 
         const dateMatch = day.date?.match(
@@ -456,8 +438,6 @@ function displayMenu(data) {
             button.classList.add("today");
             button.setAttribute("aria-label", `${day.day} – dnes`);
         }
-
-
 
         button.addEventListener("click", () => {
             const sections = container.querySelectorAll("section");
@@ -538,7 +518,7 @@ function displayMenu(data) {
             }
 
 
-            // Dotovaná cena
+            // Subsidized price
             if (meal.subsidizedPrice) {
                 const subsidizedPrice = document.createElement("p");
 
@@ -550,7 +530,7 @@ function displayMenu(data) {
             }
 
 
-            // Alergény zobrazíme iba vtedy, ak sú dostupné
+            // We will display allergens only if they are available
             if (meal.allergens) {
                 const allergens = document.createElement("p");
 
@@ -575,7 +555,7 @@ function displayMenu(data) {
 
     const today = dayjs();
 
-    // Pondelok = 0, utorok = 1, ..., nedeľa = 6
+    // Monday = 0, Tuesday = 1, ..., Sunday = 6
     const todayIndex = (today.day() + 6) % 7;
 
     const currentDay = today.format("DD");
@@ -613,6 +593,11 @@ function displayMenu(data) {
     }
 }
 
+// ============================================================
+// USER INTERFACE STATUS
+// Display loading, success, and error messages.
+// ============================================================
+
 const refreshButton = document.getElementById("refresh-menu");
 const menuStatus = document.getElementById("menu-status");
 
@@ -641,7 +626,6 @@ refreshButton.addEventListener("click", async () => {
 
 const clearCacheButton = document.getElementById("clear-cache");
 
-
 clearCacheButton.addEventListener("click", () => {
     try {
         const selectedRestaurant =
@@ -667,17 +651,7 @@ clearCacheButton.addEventListener("click", () => {
     }
 });
 
-
-loadEatAndMeet().catch(error => {
-    console.error("CHYBA PRI SPUSTENÍ:", error);
-});
-
-
-
-
-
 const restaurantSelect = document.getElementById("restaurant-select");
-
 
 restaurantSelect.addEventListener("change", async () => {
     const selectedRestaurant = restaurantSelect.value;
@@ -707,6 +681,14 @@ restaurantSelect.addEventListener("change", async () => {
     }
 });
 
+// ============================================================
+// APPLICATION INITIALIZATION
+// Load the default restaurant when the page is opened.
+// ============================================================
+
+loadEatAndMeet().catch(error => {
+    console.error("CHYBA PRI SPUSTENÍ:", error);
+});
 
 
 
