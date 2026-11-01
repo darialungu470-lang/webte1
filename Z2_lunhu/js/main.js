@@ -51,6 +51,22 @@ function saveMenuToCache(menu) {
 
 
 
+function saveLastUpdated(restaurant) {
+    const timestamp = new Date().toISOString();
+
+    localStorage.setItem(
+        `${restaurant}-last-updated`,
+        timestamp
+    );
+
+    return timestamp;
+}
+
+function getLastUpdated(restaurant) {
+    return localStorage.getItem(
+        `${restaurant}-last-updated`
+    );
+}
 
 
 
@@ -61,11 +77,16 @@ async function loadEatAndMeet(forceRefresh = false) {
 
             if (cachedMenu) {
                 displayMenu(cachedMenu);
+
+                displayLastUpdated(
+                    getLastUpdated("eatandmeet")
+                );
+
                 return;
             }
         }
 
-        // 1. Načítame lokálny HTML súbor
+        // 1. Načítame HTML súbor
         const response = await fetch("./data/eatandmeet.html");
 
         if (!response.ok) {
@@ -75,27 +96,28 @@ async function loadEatAndMeet(forceRefresh = false) {
         // 2. Prevedieme odpoveď na text
         const html = await response.text();
 
-
-
-        // 3. Z HTML textu vytvoríme DOM dokument
+        // 3. Vytvoríme DOM dokument
         const doc = new DOMParser().parseFromString(
             html,
             "text/html"
         );
 
-        // 4. Spracujeme dokument naším parserom
+        // 4. Spracujeme HTML parserom
         const result = parseEatAndMeet(doc);
 
         if (result.days.length === 0) {
             throw new Error("Parser nenašiel žiadne dni.");
         }
 
+        // 5. Uložíme menu do cache
         saveMenuToCache(result);
-        displayMenu(result);
 
-        // 5. Zobrazíme výsledok
-        displayMenu(result);
+        // 6. Uložíme čas úspešného načítania
+        const timestamp = saveLastUpdated("eatandmeet");
 
+        // 7. Zobrazíme menu a čas
+        displayMenu(result);
+        displayLastUpdated(timestamp);
 
     } catch (error) {
         console.error("Nepodarilo sa načítať menu:", error);
@@ -110,6 +132,7 @@ async function loadEatAndMeet(forceRefresh = false) {
 
 const FIITFOOD_CACHE_KEY = "fiitfood-menu";
 
+
 async function loadFiitfood(forceRefresh = false) {
     try {
         // Skúsime načítať dnešné uložené menu
@@ -121,12 +144,17 @@ async function loadFiitfood(forceRefresh = false) {
 
                 if (data.date === getTodayDate()) {
                     displayMenu(data.menu);
+
+                    displayLastUpdated(
+                        getLastUpdated("fiitfood")
+                    );
+
                     return;
                 }
             }
         }
 
-        // Ak cache neexistuje, načítame HTML
+        // Načítame HTML
         const response = await fetch("./data/fiitfood.html");
 
         if (!response.ok) {
@@ -150,7 +178,12 @@ async function loadFiitfood(forceRefresh = false) {
             })
         );
 
+        // Uložíme čas úspešného načítania
+        const timestamp = saveLastUpdated("fiitfood");
+
+        // Zobrazíme menu a dátum aktualizácie
         displayMenu(result);
+        displayLastUpdated(timestamp);
 
     } catch (error) {
         console.error("Chyba pri načítaní FIITFOOD:", error);
@@ -163,7 +196,9 @@ async function loadFiitfood(forceRefresh = false) {
 
 
 
+
 const RIVIERA_CACHE_KEY = "riviera-menu";
+
 
 async function loadRiviera(forceRefresh = false) {
     try {
@@ -175,6 +210,11 @@ async function loadRiviera(forceRefresh = false) {
 
                 if (data.date === getTodayDate()) {
                     displayMenu(data.menu);
+
+                    displayLastUpdated(
+                        getLastUpdated("riviera")
+                    );
+
                     return;
                 }
             }
@@ -203,13 +243,18 @@ async function loadRiviera(forceRefresh = false) {
             })
         );
 
+        // Uložíme čas úspešného načítania
+        const timestamp = saveLastUpdated("riviera");
+
         displayMenu(result);
+        displayLastUpdated(timestamp);
 
     } catch (error) {
         console.error("Chyba pri načítaní Riviera:", error);
         throw error;
     }
 }
+
 
 
 
@@ -622,3 +667,29 @@ restaurantSelect.addEventListener("change", async () => {
         restaurantSelect.disabled = false;
     }
 });
+
+
+
+
+
+
+function displayLastUpdated(timestamp) {
+    const element = document.getElementById("last-updated");
+
+    if (!element) return;
+
+    if (!timestamp) {
+        element.textContent = "Posledná aktualizácia: neznáma";
+        return;
+    }
+
+    const date = new Date(timestamp);
+
+    if (Number.isNaN(date.getTime())) {
+        element.textContent = "Posledná aktualizácia: neznáma";
+        return;
+    }
+
+    element.textContent =
+        `Posledná aktualizácia: ${date.toLocaleString("sk-SK")}`;
+}

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+    <!-- Basic page metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="Informácie o aplikácii Obedové menu, ktorá zobrazuje ponuky reštaurácií v okolí fakulty.">
+    <!-- SEO description -->
+    <meta name="description" content="Informácie o aplikácii Obedové menu, ktorá zobrazuje ponuky reštaurácií v okolí fakulty.">
+
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content="O aplikácii | Obedové menu">
+    <meta property="og:description" content="Zistite viac o aplikácii Obedové menu v okolí FEI STU, jej funkciách, podporovaných reštauráciách a použitých technológiách.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://webte1.fei.stuba.sk/~xlunhu/Z2_lunhu/icons/favicon.jpg">
 
     <title>O aplikácii | Obedové menu</title>
 
@@ -15,31 +22,40 @@
       rel="stylesheet"
     >
 
-
+    <!-- Custom stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
 
+    <!-- Website favicon -->
     <link rel="icon" type="image/png" href="./icons/favicon.png">
 </head>
 
 <body>
+
+    <!-- ==================== HEADER ==================== -->
     <header id = "header">
         <h1>Obedové menu v okolí fakulty</h1>
 
+        <!-- Main navigation -->
         <nav>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">About Us</a>
+                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true">About Us</a>         
                 </li>
             </ul>
         </nav>
     </header>
 
+
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main class="about-page">
+
+        <!-- Page title -->
         <h1>O aplikácii</h1>
 
+        <!-- Application overview -->
         <section>
             <h2>Čo je Obedové menu?</h2>
             <p>
@@ -54,28 +70,35 @@
             </p>
         </section>
 
-        <section>
-            <h2>Podporované reštaurácie</h2>
+        <!-- ==================== APPLICATION DETAILS ==================== -->
+        <div class="about-lists">
 
-            <ul>
-                <li>Eat & Meet</li>
-                <li>FIITFOOD</li>
-                <li>Reštaurácia Riviera</li>
-            </ul>
-        </section>
+            <!-- Supported restaurants -->
+            <section>
+                <h2>Podporované reštaurácie</h2>
 
-        <section>
-            <h2>Funkcie aplikácie</h2>
+                <ul>
+                    <li>Eat & Meet</li>
+                    <li>FIITFOOD</li>
+                    <li>Reštaurácia Riviera</li>
+                </ul>
+            </section>
 
-            <ul>
-                <li>Výber reštaurácie a dňa v týždni</li>
-                <li>Zobrazenie jedál, cien a alergénov</li>
-                <li>Automatické zvýraznenie dnešného dňa</li>
-                <li>Ukladanie údajov do localStorage</li>
-                <li>Responzívne zobrazenie pre mobil a počítač</li>
-            </ul>
-        </section>
+            <!-- Main application features -->
+            <section>
+                <h2>Funkcie aplikácie</h2>
 
+                <ul>
+                    <li>Výber reštaurácie a dňa v týždni</li>
+                    <li>Zobrazenie jedál, cien a alergénov</li>
+                    <li>Automatické zvýraznenie dnešného dňa</li>
+                    <li>Ukladanie údajov do localStorage</li>
+                    <li>Responzívne zobrazenie pre mobil a počítač</li>
+                </ul>
+            </section>
+        </div>
+        
+        <!-- ==================== DATA SOURCE ==================== -->
         <section>
             <h2>Zdroj údajov</h2>
 
@@ -92,75 +115,113 @@
             </p>
         </section>
 
+        <!-- ==================== CONTACT SECTION ==================== -->
+        <section class="contact-section" id="contact">
+            <h2>Kontaktujte nás</h2>
 
-    <section class="contact-section" id="contact">
-        <h2>Kontaktujte nás</h2>
+            <!-- Contact form introduction -->
+            <p>
+                Máte otázku, pripomienku alebo návrh na zlepšenie?
+                Napíšte nám!
+            </p>
 
-        <p>
-            Máte otázku, pripomienku alebo návrh na zlepšenie?
-            Napíšte nám!
-        </p>
+            <!-- Contact form handled by contact.js -->
+            <form id="contact-form">
 
-        <form id="contact-form">
-            <div class="form-group">
-                <label for="contact-name">Meno *</label>
-                <input
-                    type="text"
-                    id="contact-name"
-                    name="name"
-                    autocomplete="name"
-                    required
-                    minlength="2"
-                >
-            </div>
+                <!-- Name input -->
+                <div class="form-group">
+                    <label for="contact-name">Meno *</label>
 
-            <div class="form-group">
-                <label for="contact-email">E-mail *</label>
-                <input
-                    type="email"
-                    id="contact-email"
-                    name="email"
-                    autocomplete="email"
-                    required
-                >
-            </div>
+                    <input
+                        type="text"
+                        id="contact-name"
+                        name="name"
+                        autocomplete="name"
+                        required
+                        minlength="2"
+                    >
+                </div>
 
-            <div class="form-group">
-                <label for="contact-subject">Predmet *</label>
-                <select id="contact-subject" name="subject" required>
-                    <option value="">Vyberte predmet</option>
-                    <option value="question">Otázka</option>
-                    <option value="suggestion">Návrh na zlepšenie</option>
-                    <option value="problem">Nahlásenie problému</option>
-                    <option value="other">Iné</option>
-                </select>
-            </div>
+                <!-- Email input -->
+                <div class="form-group">
+                    <label for="contact-email">E-mail *</label>
 
-            <div class="form-group">
-                <label for="contact-message">Správa *</label>
-                <textarea
-                    id="contact-message"
-                    name="message"
-                    rows="5"
-                    required
-                    minlength="10"
-                ></textarea>
-            </div>
+                    <input
+                        type="email"
+                        id="contact-email"
+                        name="email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
 
-            <button type="submit" id="contact-submit">
-                Odoslať správu
-            </button>
+                <!-- Message subject selection -->
+                <div class="form-group">
+                    <label for="contact-subject">Predmet *</label>
 
-            <p id="contact-status" role="status" aria-live="polite"></p>
-        </form>
-    </section>
+                    <select id="contact-subject" name="subject" required>
+                        <option value="">Vyberte predmet</option>
+                        <option value="question">Otázka</option>
+                        <option value="suggestion">Návrh na zlepšenie</option>
+                        <option value="problem">Nahlásenie problému</option>
+                        <option value="other">Iné</option>
+                    </select>
+                </div>
+
+                <!-- Message textarea -->
+                <div class="form-group">
+                    <label for="contact-message">Správa *</label>
+
+                    <textarea
+                        id="contact-message"
+                        name="message"
+                        rows="5"
+                        required
+                        minlength="10"
+                    ></textarea>
+                </div>
+
+                <!-- Form submission button -->
+                <button type="submit" id="contact-submit">
+                    Odoslať správu
+                </button>
+
+                <!-- Form validation and submission feedback -->
+                <p id="contact-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
 
     </main>
 
-    <footer>
-        <p>Obedové menu – študentský webový projekt</p>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id = "footer">
+
+        <!-- Links to official restaurant websites -->
+        <div>
+            <h2 class = "h2" >Oficiálne stránky reštauracií:</h2>
+
+            <div class = "links-restaurant">
+                <a href="https://eatandmeet.sk/" class="btn btn-link">Eat&Meet</a>
+                <a href="http://www.freefood.sk/menu/#fiit-food" class="btn btn-link">FIITFOOD</a>
+                <a href="https://restauraciariviera.sk/obedove-menu/" class="btn btn-link">Riviera</a>
+            </div>
+        </div>
+
+        <!-- Libraries used in the project -->
+        <p>Boli použité také knižnice ako: Day.js, Pico CSS, Bootstrap5.</p>
+
+        <!-- Contact section link -->
+        <a href="about.html#contact" class="btn-link">Contact Us</a>
+
+        <!-- Copyright information -->
+        <span>@2026</span>
+
     </footer>
 
+    <!-- ==================== JAVASCRIPT ==================== -->
+
+    <!-- Contact form validation and submission handling -->
     <script src="./js/contact.js" defer></script>
 </body>
 </html>

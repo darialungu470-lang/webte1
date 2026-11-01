@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
+    <!-- Basic page metadata -->
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO description -->
+    <meta name="description" content="Obedové menu v okolí FEI STU. Prezrite si jedálne lístky reštaurácií Eat &amp; Meet, FIITFOOD a Riviera, porovnajte jedlá, ceny a alergény.">
+
+    <!-- Open Graph metadata -->
+    <meta property="og:title" content="Obedové menu | FEI STU">
+    <meta property="og:description" content="Prehľad obedových menu reštaurácií v okolí FEI STU. Vyberte si reštauráciu, deň a pozrite si dostupné jedlá a ceny.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://webte1.fei.stuba.sk/~xlunhu/Z2_lunhu/icons/favicon.jpg">
+
     <title>Obedové menu</title>
 
     <!-- Bootstrap CSS -->
@@ -10,32 +22,40 @@
       rel="stylesheet"
     >
    
-
+    <!-- Custom stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
 
+    <!-- Website favicon -->
     <link rel="icon" type="image/png" href="./icons/favicon.png">
     
 </head>
 
 <body>
+
+    <!-- ==================== HEADER ==================== -->
     <header id = "header">
         <h1>Obedové menu v okolí fakulty</h1>
 
+        <!-- Main navigation -->
         <nav>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link disabled" tabindex="-1" aria-disabled="true">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">About Us</a>
+                    <a class="nav-link active" aria-current="page" href="about.html">About Us</a>
                 </li>
             </ul>
         </nav>
     </header>
 
+
+    <!-- ==================== MAIN CONTENT ==================== -->
     <main>
         <div class="container">
             <section id="menu-section">
+
+                <!-- Notice about locally stored restaurant menus -->
                 <p class="menu-notice">
                     <strong>Upozornenie:</strong>
                     Jedálne lístky pochádzajú z lokálne uložených
@@ -44,10 +64,14 @@
                     webovej stránke reštaurácie.
                 </p>
 
+                <!-- Restaurant selection and day filtering -->
                 <div class="btn-container">
+
+                    <!-- Restaurant selection controls -->
                     <div class="restaurant-filter">
                         <h2>Jedálne</h2>
 
+                        <!-- Restaurant dropdown -->
                         <label for="restaurant-select">
                             Vyber reštauráciu:
                         </label>
@@ -58,7 +82,13 @@
                             <option value="riviera">Riviera</option>
                         </select>
 
-                        <div >
+                        <!-- Last successful menu loading timestamp -->
+                        <p id="last-updated" class="last-updated">
+                            Posledná aktualizácia: —
+                        </p>
+
+                        <!-- Menu refresh and local cache controls -->
+                        <div class="d-flex flex-column flex-sm-row gap-2">
                             <button id="refresh-menu" type="button">
                                 Obnoviť menu
                             </button>
@@ -69,64 +99,55 @@
                         </div>
                         
 
+                        <!-- Loading status and error messages -->
                         <p id="menu-status" role="status" aria-live="polite"></p>
                     </div>
 
-
-                    <div id="day-buttons" aria-label="Výber dňa"></div>
+                    <!-- Day buttons are generated dynamically by main.js -->
+                    <div id="day-buttons" role="group" aria-label="Výber dňa"></div>
                 </div>
-                
-
-
-
-
+                           
+                <!-- Parsed restaurant menus are rendered here by main.js -->
                 <div id="menu-container">
                     <p>Načítavam jedálny lístok...</p>
                 </div>
-
-
-
-
-                <div class="restaurant-links">
-                    <p>Aktuálne menu nájdete na oficiálnych stránkach:</p>
-
-                    <ul>
-                        <li>
-                            <a href="https://eatandmeet.sk/"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                                Eat & Meet
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="http://www.freefood.sk/menu/#fiit-food"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                                FIITFOOD
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="https://restauraciariviera.sk/obedove-menu/"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                                Riviera
-                            </a>
-                        </li>
-                    </ul>
-                </div>
             </section>
         </div>
-        
-        
-
-        
     </main>
 
 
+    <!-- ==================== FOOTER ==================== -->
+    <footer id = "footer">
+
+        <!-- Links to official restaurant websites -->
+        <div>
+            <h2 class = "h6">Oficiálne stránky reštauracií:</h2>
+
+            <div class = "links-restaurant">
+                <a href="https://eatandmeet.sk/" class="btn btn-link">Eat&Meet</a>
+                <a href="http://www.freefood.sk/menu/#fiit-food" class="btn btn-link">FIITFOOD</a>
+                <a href="https://restauraciariviera.sk/obedove-menu/" class="btn btn-link">Rivier</a>
+            </div>
+        </div>
+
+        <!-- External libraries used in the project -->
+        <p>Boli použité také knižnice ako: Day.js, Pico CSS, Bootstrap5.</p>
+
+        <!-- Link to the contact section on the About page -->
+        <a href="about.html#contact" class="btn-link">Contact Us</a>
+
+        <!-- Copyright information -->
+        <span>@2026</span>
+
+    </footer>
+
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+
+    <!-- Day.js library for date and time operations -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.13/dayjs.min.js"></script>
 
+     <!-- Main application logic and restaurant menu parsers -->
     <script type="module" src="./js/main.js"></script>
 </body>
 
