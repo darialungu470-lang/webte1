@@ -2,10 +2,17 @@ const PRODUCTS = [
   { id: 1, name: "Zvonček na bicykel", price: 8.5, tags: ["bike"] },
   { id: 2, name: "Fľaša na vodu", price: 12, tags: ["sport"] },
   { id: 3, name: "Svetlá na bicykel", price: 24.9, tags: ["bike", "safety"] },
-  { id: 4, name: '<img src="x" onerror="alert(\'Hacked\')">', price: 1, tags: [] }
 ];
 
+const cart = [];
+
 const list = document.getElementById("products");
+const discountButton = document.getElementById("discount");
+const statusText = document.getElementById("status");
+const reloadButton = document.getElementById("reload");
+
+const buttons = list.querySelectorAll("button");
+
 console.log(list);
 
 function createProductItem(product) {
@@ -42,8 +49,6 @@ function renderProducts(products) {
 renderProducts(PRODUCTS);
 
 
-const cart = [];
-
 function addToCart(product) {
   cart.push(product);
   renderCart();
@@ -57,16 +62,23 @@ function renderCart() {
 }
 
 
-const buttons = list.querySelectorAll("button");
+// function applyDiscount(items) {
+//   const copy = [...items];
+//   for (const item of copy) {
+//     item.price = item.price * 0.9;
+//   }
+//   return copy;
+// }
 
-const discountButton = document.getElementById("discount");
+// discountButton.addEventListener("click", () => {
+//   applyDiscount(cart);
+//   renderCart();
+// });
+
+let discountActive = false;
 
 function applyDiscount(items) {
-  const copy = [...items];
-  for (const item of copy) {
-    item.price = item.price * 0.9;
-  }
-  return copy;
+  return items.map((item) => ({ ...item, price: item.price * 0.9 }));
 }
 
 discountButton.addEventListener("click", () => {
@@ -75,15 +87,6 @@ discountButton.addEventListener("click", () => {
   renderCart();
 });
 
-let discountActive = false;
-
-function applyDiscount(items) {
-  return items.map((item) => ({ ...item, price: item.price * 0.9 }));
-}
-
-
-const statusText = document.getElementById("status");
-const reloadButton = document.getElementById("reload");
 
 function loadProducts() {
   return new Promise((resolve, reject) => {
@@ -97,12 +100,12 @@ function loadProducts() {
   });
 }
 
-reloadButton.addEventListener("click", () => {
-  statusText.textContent = "Načítavam…";
-  const products = loadProducts();
-  renderProducts(products);
-  statusText.textContent = `Načítaných produktov: ${products.length}`;
-});
+// reloadButton.addEventListener("click", () => {
+//   statusText.textContent = "Načítavam…";
+//   const products = loadProducts();
+//   renderProducts(products);
+//   statusText.textContent = `Načítaných produktov: ${products.length}`;
+// });
 
 
 async function showProducts() {
@@ -130,3 +133,7 @@ reloadButton.addEventListener("click", () => {
   console.log("6");
 });
 
+
+console.log(list.childNodes.length, list.children.length);
+console.log(list.firstChild.nodeName, list.firstChild.nodeType);
+console.log(list.firstElementChild.nodeName, list.firstElementChild.nodeType);
