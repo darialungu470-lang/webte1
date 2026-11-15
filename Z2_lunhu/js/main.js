@@ -326,6 +326,28 @@ function formatMenuDate(dateString) {
 // Create DOM elements from the parsed restaurant data.
 // ============================================================
 
+/**
+ * Checks whether the given menu day represents today.
+ *
+ * @param {Object} day - Parsed daily menu.
+ * @returns {boolean} True if the menu day is today.
+ */
+function isTodayMenu(day) {
+    const dayNames = [
+        "NEDEĽA",
+        "PONDELOK",
+        "UTOROK",
+        "STREDA",
+        "ŠTVRTOK",
+        "PIATOK",
+        "SOBOTA"
+    ];
+
+    const todayName = dayNames[dayjs().day()];
+
+    return day.day?.trim().toUpperCase().startsWith(todayName) ?? false;
+}
+
 function displayMenu(data) {
     const container = document.getElementById("menu-container");
 
@@ -412,27 +434,30 @@ function displayMenu(data) {
         button.type = "button";
         button.textContent = day.day;
 
-        const today = dayjs();
+        // Check whether this menu belongs to the current weekday.
+        const isToday = isTodayMenu(day);
 
-        const dateMatch = day.date?.match(
-            /^(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?$/
-        );
+        // const today = dayjs();
 
-        let isToday = false;
+        // const dateMatch = day.date?.match(
+        //     /^(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?$/
+        // );
 
-        if (dateMatch) {
-            const dayNumber = Number(dateMatch[1]);
-            const monthNumber = Number(dateMatch[2]);
+        // let isToday = false;
+
+        // if (dateMatch) {
+        //     const dayNumber = Number(dateMatch[1]);
+        //     const monthNumber = Number(dateMatch[2]);
             
-            const year = dateMatch[3] ? Number(dateMatch[3]) : today.year();
+        //     const year = dateMatch[3] ? Number(dateMatch[3]) : today.year();
 
-            isToday =
-                dayNumber === today.date() &&
-                monthNumber === today.month() + 1 &&
-                year === today.year();
-        } else if (!day.date) {
-            isToday = index === (today.day() + 6) % 7;
-        }
+        //     isToday =
+        //         dayNumber === today.date() &&
+        //         monthNumber === today.month() + 1 &&
+        //         year === today.year();
+        // } else if (!day.date) {
+        //     isToday = index === (today.day() + 6) % 7;
+        // }
 
         if (isToday) {
             button.classList.add("today");
@@ -489,14 +514,14 @@ function displayMenu(data) {
             name.textContent = `${meal.type}: ${meal.name}`;
 
             
-            const price = document.createElement("p");
-            price.classList.add("meal-price");
+            // const price = document.createElement("p");
+            // price.classList.add("meal-price");
 
-            if (data.restaurant === "Riviera") {
-                price.textContent = `Cena denného menu: ${meal.price}`;
-            } else {
-                price.textContent = `Bežná cena: ${meal.price}`;
-            }
+            // if (data.restaurant === "Riviera") {
+            //     price.textContent = `Cena denného menu: ${meal.price}`;
+            // } else {
+            //     price.textContent = `Bežná cena: ${meal.price}`;
+            // }
 
             mealElement.appendChild(name);
 
@@ -555,42 +580,55 @@ function displayMenu(data) {
 
     const today = dayjs();
 
-    // Monday = 0, Tuesday = 1, ..., Sunday = 6
-    const todayIndex = (today.day() + 6) % 7;
+    // !!!
+    // Find today's menu by comparing weekday names.
+    const matchingIndex = data.days.findIndex(isTodayMenu);
 
-    const currentDay = today.format("DD");
-    const currentMonth = today.format("MM");
-    const currentYear = today.format("YYYY");
-
-    const matchingIndex = data.days.findIndex(day => {
-        if (!day.date) return false;
-
-        const match = day.date.match(
-            /^(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?$/
-        );
-
-        if (!match) return false;
-
-        const dayNumber = match[1].padStart(2, "0");
-        const monthNumber = match[2].padStart(2, "0");
-        const year = match[3];
-
-        return dayNumber === currentDay &&
-            monthNumber === currentMonth &&
-            (!year || year === currentYear);
-    });
-
-    const selectedIndex = matchingIndex >= 0
-        ? matchingIndex
-        : data.days.some(day => day.date)
-            ? -1
-            : todayIndex;
-
-    if (selectedIndex >= 0 && dayButtons[selectedIndex + 1]) {
-        dayButtons[selectedIndex + 1].click();
+    // Automatically select today's menu if available.
+    if (matchingIndex >= 0 && dayButtons[matchingIndex + 1]) {
+        dayButtons[matchingIndex + 1].click();
     } else {
+        // Display the entire week if today's menu is unavailable.
         dayButtons[0].click();
     }
+
+    // // Monday = 0, Tuesday = 1, ..., Sunday = 6
+    // const todayIndex = (today.day() + 6) % 7;
+
+    // const currentDay = today.format("DD");
+    // const currentMonth = today.format("MM");
+    // const currentYear = today.format("YYYY");
+
+    // const matchingIndex = data.days.findIndex(day => {
+    //     if (!day.date) return false;
+
+    //     const match = day.date.match(
+    //         /^(\d{1,2})\.\s*(\d{1,2})\.(?:\s*(\d{4}))?$/
+    //     );
+
+    //     if (!match) return false;
+
+    //     const dayNumber = match[1].padStart(2, "0");
+    //     const monthNumber = match[2].padStart(2, "0");
+    //     const year = match[3];
+
+    //     return dayNumber === currentDay &&
+    //         monthNumber === currentMonth &&
+    //         (!year || year === currentYear);
+    // });
+
+    // const selectedIndex = matchingIndex >= 0
+    //     ? matchingIndex
+    //     : data.days.some(day => day.date)
+    //         ? -1
+    //         : todayIndex;
+
+    // if (selectedIndex >= 0 && dayButtons[selectedIndex + 1]) {
+    //     dayButtons[selectedIndex + 1].click();
+    // } else {
+    //     dayButtons[0].click();
+    // }
+
 }
 
 // ============================================================
