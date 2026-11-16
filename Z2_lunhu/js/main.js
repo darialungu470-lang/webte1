@@ -578,7 +578,7 @@ function displayMenu(data) {
     const dayButtons = buttonsContainer.querySelectorAll("button");
 
 
-    const today = dayjs();
+    // const today = dayjs();
 
     // !!!
     // Find today's menu by comparing weekday names.
