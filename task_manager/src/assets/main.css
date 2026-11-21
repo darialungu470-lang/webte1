@@ -1,0 +1,174 @@
+@font-face {
+  font-family: 'Caveat';
+  src: url('./fonts/Caveat-VariableFont_wght.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Serif';
+  src: url('./fonts/DMSerifDisplay-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+
+:root{
+    --color-body: rgb(254, 252, 230);
+    --color-yellow: rgb(255, 231, 160);
+    --color-add-btn: #e61685;
+    --color-darkpink: #b41180;
+    --color-lightpink: #ffd5ee;
+    --color-main-pink: rgb(255, 161, 208);
+}
+
+body{
+    background: var(--color-body);
+    font-family: 'Serif';
+    font-size: 16px;
+}
+
+/* --- Header --- */
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 2rem;
+
+    background: var(--color-yellow);
+    
+}
+
+.header > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+
+}
+
+.header-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+}
+
+.header-logo img{
+    width: 50px;
+}
+
+.header-logo h1{
+    font-size: 36px;
+}
+
+/* .header-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+} */
+
+.header button, .btn-load{
+    margin: 5px 2.5px;
+    width: 130px;
+    height: 35px;
+
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Serif';
+
+    border: none;
+    border-radius: 15px;
+
+    transition: all 0.8s;
+    
+}
+
+.header-nav button{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    background-color: var(--color-lightpink);
+    color: var(--color-darkpink);
+    border: none;
+    border-radius: 15px;
+    
+}
+
+.button-icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+
+  margin: 0;
+  padding: 0;
+}
+
+.add-task{
+    background-color: var(--color-add-btn);
+    color: var(--color-lightpink);
+
+}
+
+.header button:hover:not(.active), .btn-load:hover{
+    width: 135px;
+    height: 38px;
+
+    font-size: 14px;
+}
+
+
+/* --- Main --- */
+
+.container{
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+/* --- Indificator form --- */
+
+.identifier-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    padding: 1rem 1rem;
+}
+
+.identifier-name{
+    color: var(--color-darkpink);
+}
+
+.identifier-form input:focus {
+  outline: 1px solid #b51766;
+  border-radius: 5px;
+  outline-offset: 2.5px;
+  box-shadow: 0 0 10px var(--color-add-btn);
+}
+
+.btn-load{
+    color: var(--color-darkpink);
+    background: var(--color-lightpink);
+
+}
+
+/* --- Calendar --- */
+
+.calendar {
+    width: 100%;
+    max-width: 600px;
+}
