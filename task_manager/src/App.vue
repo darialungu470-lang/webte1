@@ -61,9 +61,9 @@ async function loadTodos() {
 
   try {
     todos.value = await getTodos(name)
-    successMessage.value = `Úlohy boli načítané. Počet úloh: ${todos.value.length}.`
-    todos.value = await getTodos(name)
     loadedStudentName.value = name
+    selectedTaskId.value = null
+    successMessage.value = `Úlohy boli načítané. Počet úloh: ${todos.value.length}.`
   } catch (error) {
     errorMessage.value = error instanceof TypeError
       ? 'Nepodarilo sa pripojiť k serveru. Skúste to znova.'
@@ -243,85 +243,268 @@ async function resetTaskList() {
     @new-task="openNewTask"
   />
 
-  <main class = "container">
-    <StudentIdentifierForm v-model="studentName" :loading="loading" @load="loadTodos" />
-
-    <p v-if="errorMessage" role="alert">{{ errorMessage }}</p>
-    <p v-if="successMessage" role="status">{{ successMessage }}</p>
-
-
-
+  <main class = "container workspace">
     
-    <TaskFormDialog 
-      v-if="isTaskFormOpen" 
-      :editing-task="editingTask"
-      :saving="saving"
-      :initial-task-dates="initialTaskDates"
-      @close="isTaskFormOpen = false" 
-      @save="saveTask"
-    />
 
-    <TaskCalendar 
-      v-if="activeTab === 'calendar'" 
-      :todos="todos" 
-      @select-task="selectedTaskId = $event"
-      @create-task="openNewTask"
-    />
-      
-    <TaskList 
-      v-else :todos="todos" 
-      @edit="openEditTask"
-      @toggle-status="toggleTaskStatus"
-      @delete="removeTask"
-      :busy="loading || saving"
-    />
+    <section class = "workspace-content">
 
-    <button
-      v-if="activeTab === 'list' && loadedStudentName"
-      type="button"
-      :disabled="loading || saving || isTaskFormOpen"
-      @click="resetTaskList"
-    >
-      Obnoviť ukážkové úlohy
-    </button>
+      <TaskCalendar 
+        v-if="activeTab === 'calendar'" 
+        :todos="todos" 
+        @select-task="selectedTaskId = $event"
+        @create-task="openNewTask"
+      />
+        
+      <TaskList 
+        v-else :todos="todos" 
+        @edit="openEditTask"
+        @toggle-status="toggleTaskStatus"
+        @delete="removeTask"
+        :busy="loading || saving"
+      />
 
-    <section
-      v-if="activeTab === 'calendar' && selectedTask"
-      aria-labelledby="task-details-title"
-    >
-      <h2 id="task-details-title">{{ selectedTask.title }}</h2>
-      <p>{{ selectedTask.description || 'Bez popisu.' }}</p>
-      <p v-if="selectedTask.is_finished">Dokončená</p>
-      <p v-else-if="isOverdue(selectedTask)">Po termíne</p>
-      <p v-else>Nedokončená</p>
-
-      <p>Začiatok: {{ formatDate(selectedTask.date_from) }}</p>
-      <p>Koniec: {{ formatDate(selectedTask.date_to) }}</p>
-
-      <button type="button" @click="editSelectedTask">Upraviť</button>
-      <button type="button" @click="selectedTaskId = null">Zavrieť</button>
-
-      <button
-        type="button"
-        :disabled="loading || saving"
-        @click="toggleTaskStatus(selectedTask)"
-      >
-        {{ selectedTask.is_finished ? 'Znovu otvoriť' : 'Dokončiť' }}
-      </button>
-
-      <button
-        type="button"
-        :disabled="loading || saving"
-        @click="removeTask(selectedTask)"
-      >
-        Odstrániť
-      </button>
     </section>
+
+    <section class = "workspace-panel">
+
+      <StudentIdentifierForm 
+        v-model="studentName" 
+        :loading="loading || saving" 
+        @load="loadTodos" 
+      />
+      <p v-if="errorMessage" role="alert" class = "desc-message">{{ errorMessage }}</p>
+      <p v-if="successMessage" role="status" class = "desc-message">{{ successMessage }}</p>
+
+      <TaskFormDialog 
+        v-if="isTaskFormOpen" 
+        :editing-task="editingTask"
+        :saving="saving"
+        :initial-task-dates="initialTaskDates"
+        @close="isTaskFormOpen = false" 
+        @save="saveTask"
+      />
+
+
+      <section
+        v-if="activeTab === 'calendar' && selectedTask"
+        class="task-details"
+        aria-labelledby="task-details-title"
+      >
+        <h2 id="task-details-title">{{ selectedTask.title }}</h2>
+        <p class="task-description">{{ selectedTask.description || 'Bez popisu.' }}</p>
+        <p v-if="selectedTask.is_finished" class="task-status task-status--done">Dokončená</p>
+        <p v-else-if="isOverdue(selectedTask)" class="task-status task-status--overdue">Po termíne</p>
+        <p v-else class="task-status task-status--open">Nedokončená</p>
+
+        <dl class="task-dates">
+          <div>
+            <dt>Začiatok</dt>
+            <dd>{{ formatDate(selectedTask.date_from) }}</dd>
+          </div>
+          <div>
+            <dt>Koniec</dt>
+            <dd>{{ formatDate(selectedTask.date_to) }}</dd>
+          </div>
+        </dl>
+
+        <div class="task-actions">
+          <button type="button" @click="editSelectedTask">Upraviť</button>
+
+          <button type="button" class="task-close" @click="selectedTaskId = null">Zavrieť</button>
+
+          <button
+            type="button"
+            class="task-toggle"
+            :disabled="loading || saving"
+            @click="toggleTaskStatus(selectedTask)"
+          >
+            {{ selectedTask.is_finished ? 'Znovu otvoriť' : 'Dokončiť' }}
+          </button>
+
+           <button
+              type="button"
+              class="task-delete"
+              :disabled="loading || saving"
+              @click="removeTask(selectedTask)"
+            >
+              Odstrániť
+            </button>
+        </div>
+        
+      </section>
+
+
+      <button
+        v-if="activeTab === 'list' && loadedStudentName"
+        type="button"
+        class = "btn-reset"
+        :disabled="loading || saving || isTaskFormOpen"
+        @click="resetTaskList"
+      >
+        Obnoviť ukážkové úlohy
+      </button>
+
+    </section>
+    
   </main>
 
   <AppFooter />
 </template>
 
 <style scoped>
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  align-items: start;
+  gap: clamp(1rem, 4vw, 3rem);
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.workspace-content,
+.workspace-panel {
+  min-width: 0;
+}
+
+.workspace-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: white;
+  border: 1px solid #e7dce2;
+  border-radius: 1rem;
+}
+
+.task-details {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 56rem) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.task-details {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  min-width: 0;
+  padding-top: 1rem;
+  border-top: 1px solid #eadfe4;
+  overflow-wrap: anywhere;
+}
+
+.task-details h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.task-description {
+  margin: 0;
+  color: #57464e;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.task-status {
+  margin: 0;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.task-status--open {
+  background: #fbd5e5;
+  color: #72123b;
+}
+
+.task-status--done {
+  background: #d6e9d7;
+  color: #245432;
+}
+
+.task-status--overdue {
+  background: #fde5e8;
+  color: #a51d36;
+}
+
+.task-dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+}
+
+.task-dates dt {
+  color: #57464e;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.task-dates dd {
+  margin: 0.2rem 0 0;
+}
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task-actions button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  background: #fbd5e5;
+  color: #72123b;
+  font: inherit;
+  font-weight: 600;
+}
+
+.task-actions .task-close {
+  border-color: #d4b7c4;
+  background: white;
+}
+
+.task-actions .task-toggle {
+  background: #b51766;
+  color: white;
+}
+
+.task-actions .task-delete {
+  border-color: #a51d36;
+  background: white;
+  color: #a51d36;
+}
+
+.task-actions button:focus-visible {
+  outline: 2px solid #b51766;
+  outline-offset: 2px;
+}
+
+.task-actions button:disabled {
+  opacity: 0.6;
+}
+
+.btn-reset{
+  width: 170px;
+  height: 40px;
+  border: none;
+  border-radius: 1rem;
+  background: #fbd5e5;
+  color: #72123b;
+  font-size: 14px;
+  font-family: 'Serif';
+
+  transition: all 0.8s;
+}
+
+.btn-reset:hover{
+  box-shadow: 0 0 10px #72123b;
+}
 
 </style>

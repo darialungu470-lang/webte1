@@ -24,7 +24,14 @@ const emit = defineEmits(['select-task', 'create-task'])
 
 const calendarOptions = computed(() => ({
   plugins: [dayGridPlugin, timeGridPlugin, themePlugin, interactionPlugin],
+
   initialView: 'dayGridMonth',
+  views: {
+    dayGridMonth: {
+      contentHeight: 440,
+    },
+  },
+
   locale: skLocale,
   firstDay: 1,
 
@@ -34,13 +41,19 @@ const calendarOptions = computed(() => ({
     end: 'dayGridMonth,timeGridWeek,timeGridDay',
   },
 
+  headerToolbarClass: 'calendar-toolbar',
+  toolbarSectionClass: 'calendar-toolbar-section',
+  toolbarTitleClass: 'calendar-title',
+  buttonClass: ({ isSelected }) =>
+  isSelected ? 'calendar-button is-selected' : 'calendar-button',
+
   events: props.todos.map((todo) => ({
     id: String(todo.id),
     title: todo.title,
     start: todo.date_from,
     end: todo.date_to,
-    backgroundColor: todo.is_finished ? '#287447' : '#b51766',
-    borderColor: todo.is_finished ? '#287447' : '#b51766',
+    color: todo.is_finished ? '#287447' : '#b51766',
+    contrastColor: todo.is_finished ? '#fff0f6' : '#fff0f6',
   })),
 
   eventClick(info) {
@@ -81,6 +94,84 @@ const calendarOptions = computed(() => ({
 
 </script>
 
+
 <template>
-  <FullCalendar :options="calendarOptions" class = "calendar"/>
+  <div class="calendar-card">
+    <FullCalendar :options="calendarOptions" />
+  </div>
 </template>
+
+
+<style scoped>
+
+.calendar-card {
+  min-width: 0;
+  
+  background: #fff;
+  border: 1px solid #eadfe4;
+  border-radius: 1rem;
+}
+
+.calendar-card :deep(.calendar-toolbar) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-card :deep(.calendar-toolbar-section:nth-child(2)) {
+  justify-self: end;
+}
+
+.calendar-card :deep(.calendar-toolbar-section:nth-child(3)) {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.calendar-card :deep(.calendar-title) {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.375rem);
+  text-align: right;
+}
+
+.calendar-card :deep(.calendar-button) {
+  min-height: 2rem;
+  min-width: 2rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
+
+  background: #fff0f6;
+  color: #72123b;
+  font-weight: 600;
+}
+
+.calendar-card :deep(.calendar-button:hover:not(:disabled)) {
+  background: #ffd5e6;
+}
+
+.calendar-card :deep(.calendar-button.is-selected) {
+  background: #b51766;
+  border-color: #b51766;
+  color: #fff;
+}
+
+@media (max-width: 36rem) {
+  .calendar-card :deep(.calendar-toolbar) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .calendar-card :deep(.calendar-toolbar-section:nth-child(2)) {
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .calendar-card :deep(.calendar-title) {
+    text-align: left;
+  }
+}
+
+</style>
+

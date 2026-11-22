@@ -10,7 +10,7 @@ const emit = defineEmits(['change-tab', 'new-task']);
 <template>
 
     <header class = "header">
-        <div>
+        <div class="header-main">
             <div class="header-logo" >
                 
                 <img src="/favicon.svg" alt="Logo">
