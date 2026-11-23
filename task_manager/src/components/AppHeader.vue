@@ -1,8 +1,11 @@
 <script setup>
+
+// Receive the active view from the parent component.
 defineProps({
   activeTab: String,
 })
 
+// Let the parent handle navigation and open the new-task form.
 const emit = defineEmits(['change-tab', 'new-task']);
 
 </script>
@@ -11,6 +14,8 @@ const emit = defineEmits(['change-tab', 'new-task']);
 
     <header class = "header">
         <div class="header-main">
+
+            <!-- Display the application logo and title. -->
             <div class="header-logo" >
                 
                 <img src="/favicon.svg" alt="Logo">
@@ -18,6 +23,7 @@ const emit = defineEmits(['change-tab', 'new-task']);
                 <h1>Môj TODO List</h1>
             </div>
 
+            <!-- Highlight the active view and emit the selected view when a button is clicked. -->
             <nav aria-label="Main navigation" class="header-nav">
                 <button
                 type="button"
@@ -39,7 +45,7 @@ const emit = defineEmits(['change-tab', 'new-task']);
             </nav>
         </div>
         
-
+        <!-- Request a new task form from either view. -->
         <button type="button" class="add-task" @click="emit('new-task')">+ Nová úloha</button>
     </header>
 
@@ -47,6 +53,7 @@ const emit = defineEmits(['change-tab', 'new-task']);
 
 <style scoped>
 
+/* Visually distinguish the button for the current view. */
 .active {
     background-color: #e61685;
     color: #ffd5ee;

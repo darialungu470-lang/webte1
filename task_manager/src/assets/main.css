@@ -1,11 +1,4 @@
-@font-face {
-  font-family: 'Caveat';
-  src: url('./fonts/Caveat-VariableFont_wght.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-}
-
+/* Load DM Serif Display under the family name used by the interface. */
 @font-face {
   font-family: 'Serif';
   src: url('./fonts/DMSerifDisplay-Regular.ttf') format('truetype');
@@ -14,7 +7,7 @@
   font-display: swap;
 }
 
-
+/* Define the shared color palette. */
 :root{
     --color-body: rgb(254, 252, 230);
     --color-yellow: rgb(255, 231, 160);
@@ -23,14 +16,27 @@
     --color-main-pink: rgb(255, 161, 208);
 }
 
+/* Set the page background and default typography. */
 body{
     background: var(--color-body);
     font-family: 'Serif';
     font-size: 16px;
+    margin: 0;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#app > main {
+  flex: 1;
 }
 
 /* --- Header --- */
 
+/* Arrange the header groups horizontally on wide screens. */
 .header{
     display: flex;
     justify-content: space-between;
@@ -44,6 +50,7 @@ body{
     
 }
 
+/* Keep the logo and navigation together in the main header group. */
 .header > div {
     display: flex;
     justify-content: center;
@@ -52,6 +59,7 @@ body{
 
 }
 
+/* Align the logo image and application title. */
 .header-logo {
     display: flex;
     justify-content: center;
@@ -68,6 +76,7 @@ body{
     font-size: 36px;
 }
 
+/* Share dimensions, typography, and transitions across header and load buttons. */
 .header button, .btn-load{
     margin: 5px 2.5px;
     width: 130px;
@@ -84,6 +93,7 @@ body{
     
 }
 
+/* Center each navigation icon alongside its label. */
 .header-nav button{
     display: inline-flex;
     justify-content: center;
@@ -100,6 +110,7 @@ body{
     
 }
 
+/* Give navigation icons a consistent size while preserving their proportions. */
 .button-icon {
   width: 25px;
   height: 25px;
@@ -115,10 +126,12 @@ body{
 
 }
 
+/* Highlight the load button and inactive header buttons on hover. */
 .header button:hover:not(.active), .btn-load:hover{
     box-shadow: 0 0 10px var(--color-darkpink);
 }
 
+/* Reduce header spacing and let buttons size to their contents on narrower screens. */
 @media (max-width: 69.5rem) {
   .header {
     padding-inline: 1rem;
@@ -140,6 +153,7 @@ body{
   }
 }
 
+/* Place the logo and new-task button above the navigation on small screens. */
 @media (max-width: 42rem) {
   .header {
     display: grid;
@@ -147,6 +161,7 @@ body{
     padding: 0.75rem;
   }
 
+  /* Let the logo and navigation participate directly in the header grid. */
   .header > div {
     display: contents;
   }
@@ -173,6 +188,7 @@ body{
     grid-row: 1;
   }
 
+  /* Give both navigation buttons equal space on the second row. */
   .header-nav {
     grid-column: 1 / -1;
     grid-row: 2;
@@ -181,6 +197,7 @@ body{
     gap: 0.5rem;
   }
 
+  /* Keep the buttons at least 44px tall for touch interaction. */
   .header button {
     height: auto;
     min-height: 44px;
@@ -202,14 +219,7 @@ body{
 
 /* --- Main --- */
 
-/* .container{
-    width: 100%;
-    max-width: 1200px;
-    margin-inline: auto;
-
-    padding: 1rem; 
-} */
-
+/* Allocate more width to the main content than to the controls panel. */
 .workspace {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -218,6 +228,7 @@ body{
   padding: clamp(1rem, 4vw, 3rem);
 }
 
+/* Stack the workspace columns when the viewport is narrow. */
 @media (max-width: 56rem) {
   .workspace {
     grid-template-columns: minmax(0, 1fr);
@@ -226,6 +237,7 @@ body{
 
 /* --- Indificator form --- */
 
+/* Center the student identifier field and load button within the form. */
 .identifier-form{
     display: flex;
     justify-content: center;
@@ -235,11 +247,11 @@ body{
     padding: 1rem 1rem;
 }
 
-
 .identifier-name{
     color: var(--color-darkpink);
 }
 
+/* Make the focused identifier input easy to distinguish. */
 .identifier-form input:focus {
   outline: 2px solid #b51766;
   border-radius: 5px;
@@ -254,6 +266,7 @@ body{
 
 }
 
+/* Stack the form controls when the workspace panel has less horizontal room. */
 @media(min-width: 56rem) and (max-width: 69.5rem){
     .identifier-form{
         flex-direction: column;
@@ -263,6 +276,7 @@ body{
     }
 }
 
+/* Add space around the identifier input at intermediate viewport widths. */
 @media(max-width: 56rem) and (min-width: 39rem){
     .identifier-name{
         margin: 0.5rem;
@@ -273,13 +287,15 @@ body{
 
 /* --- Calendar --- */
 
+/* Let the calendar wrapper shrink with its parent up to a maximum width of 600px. */
 .calendar {
     width: 100%;
     max-width: 600px;
 }
 
-
+/* Use a shared panel style for feedback and empty-state messages. */
 .desc-message{
+  margin: 0;
   padding: 1rem;
   background: #fff5f9;
   border-radius: 1rem;

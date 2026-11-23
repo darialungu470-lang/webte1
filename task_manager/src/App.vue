@@ -1,4 +1,5 @@
 <script setup>
+// Import Vue helpers, UI components, and API utilities.
 import { computed, ref } from 'vue'
 import TaskCalendar from './components/TaskCalendar.vue'
 import TaskList from './components/TaskList.vue'
@@ -9,34 +10,45 @@ import StudentIdentifierForm from './components/StudentIdentifierForm.vue'
 import { getTodos, createTodo, updateTodo, setTodoFinished, deleteTodo, resetTodos } from './services/todoApi.js'
 import { formatDate } from './utils/dates.js'
 
+// Track the student whose tasks are currently loaded and whether a write is in progress.
 const loadedStudentName = ref('')
 const saving = ref(false)
 
+// Start with the calendar view.
 const activeTab = ref('calendar');
 
+// Store the task being edited. A null value means the form is in create mode.
 const editingTask = ref(null);
 
+// Keep the typed identifier separate from the identifier used by the loaded list.
 const studentName = ref('');
+
+// Share the same task collection between the calendar and the list.
 const todos = ref([]);
 const loading = ref(false);
 
+// Store feedback for the most recent operation.
 const errorMessage = ref('');
 const successMessage = ref('');
 
+// Track form visibility, the selected calendar task, and optional preset dates.
 const isTaskFormOpen = ref(false);
 const selectedTaskId = ref(null);
 
 const initialTaskDates = ref(null);
 
 
+// Only unfinished tasks can become overdue.
 function isOverdue(todo) {
   return !todo.is_finished && new Date(todo.date_to).getTime() < Date.now()
 }
 
+// Resolve the selected task from the latest task collection.
 const selectedTask = computed(() =>
   todos.value.find((todo) => String(todo.id) === selectedTaskId.value),
 )
 
+// Open the selected task for editing and clear its details panel.
 function editSelectedTask() {
   if (!selectedTask.value) return
 
@@ -44,6 +56,7 @@ function editSelectedTask() {
   selectedTaskId.value = null
 }
 
+// Validate the identifier and load the matching tasks.
 async function loadTodos() {
   if (loading.value || saving.value) return
 
@@ -73,6 +86,7 @@ async function loadTodos() {
   }
 }
 
+// Create or update a task for the student whose list is loaded.
 async function saveTask(taskData) {
   if (saving.value || loading.value) return
 
@@ -90,6 +104,7 @@ async function saveTask(taskData) {
   try {
     const todoToEdit = editingTask.value
 
+    // Create or update a task for the student whose list is loaded.
     const payload = {
       title: taskData.title,
       description: taskData.description,
@@ -98,6 +113,7 @@ async function saveTask(taskData) {
       is_finished: taskData.is_finished,
     }
 
+    // Use the presence of an editable task to choose between updating and creating.
     if (todoToEdit) {
       await updateTodo(name, todoToEdit.id, payload)
     } else {
@@ -124,27 +140,30 @@ async function saveTask(taskData) {
 }
 
 
+// Open the form with an existing task.
 function openEditTask(todo) {
   editingTask.value = todo
   isTaskFormOpen.value = true
 }
 
+// Open a new task form, optionally with dates selected in the calendar.
 function openNewTask(dates = null) {
   if (saving.value) return
 
-  if (isTaskFormOpen.value) {
-    if (!editingTask.value && dates) {
-      initialTaskDates.value = dates
-    }
+  // Update the dates without clearing an open creation form.
+  if (isTaskFormOpen.value && !editingTask.value) {
+    if (dates) initialTaskDates.value = dates
     return
   }
 
+  // Discard the edit draft and switch to a new task.
   editingTask.value = null
   selectedTaskId.value = null
   initialTaskDates.value = dates
   isTaskFormOpen.value = true
 }
 
+// Persist the new completion status, then update the matching task locally.
 async function toggleTaskStatus(todo) {
   if (loading.value || saving.value || !loadedStudentName.value) return
 
@@ -171,6 +190,7 @@ async function toggleTaskStatus(todo) {
   }
 }
 
+// Confirm deletion before removing the task on the server and from the shared list.
 async function removeTask(todo) {
   const name = loadedStudentName.value
   if (loading.value || saving.value || !name) return
@@ -193,6 +213,7 @@ async function removeTask(todo) {
   }
 }
 
+// Confirm the reset and reload the sample tasks from the server.
 async function resetTaskList() {
   const name = loadedStudentName.value
   if (!name || loading.value || saving.value || isTaskFormOpen.value) return
@@ -223,20 +244,24 @@ async function resetTaskList() {
     saving.value = false
   }
 }
+
+// Close the form and show details for the selected calendar task.
+function openTaskDetails(taskId) {
+  if (saving.value) return
+
+  isTaskFormOpen.value = false
+  editingTask.value = null
+  initialTaskDates.value = null
+  selectedTaskId.value = String(taskId)
+}
 </script>
 
 
 
 
 
-
-
-
-
-
-
-
 <template>
+  <!-- Switch between the calendar and list, or open a new task form. -->
   <AppHeader 
     :active-tab="activeTab" 
     @change-tab="activeTab = $event" 
@@ -245,13 +270,13 @@ async function resetTaskList() {
 
   <main class = "container workspace">
     
-
+    <!-- Display the active view using the shared task collection. -->
     <section class = "workspace-content">
 
       <TaskCalendar 
         v-if="activeTab === 'calendar'" 
         :todos="todos" 
-        @select-task="selectedTaskId = $event"
+        @select-task="openTaskDetails"
         @create-task="openNewTask"
       />
         
@@ -265,18 +290,24 @@ async function resetTaskList() {
 
     </section>
 
+    <!-- Keep student controls, feedback, and task actions beside the active view. -->
     <section class = "workspace-panel">
 
+      <!-- Load tasks for the entered student identifier. -->
       <StudentIdentifierForm 
         v-model="studentName" 
         :loading="loading || saving" 
         @load="loadTodos" 
       />
+
+      <!-- Announce errors and successful operations to assistive technology. -->
       <p v-if="errorMessage" role="alert" class = "desc-message">{{ errorMessage }}</p>
       <p v-if="successMessage" role="status" class = "desc-message">{{ successMessage }}</p>
 
+      <!-- Reuse the form for creating and editing tasks. -->
       <TaskFormDialog 
         v-if="isTaskFormOpen" 
+        :key="editingTask ? `edit-${editingTask.id}` : 'new-task'"
         :editing-task="editingTask"
         :saving="saving"
         :initial-task-dates="initialTaskDates"
@@ -285,6 +316,7 @@ async function resetTaskList() {
       />
 
 
+      <!-- Show details for the task selected in the calendar. -->
       <section
         v-if="activeTab === 'calendar' && selectedTask"
         class="task-details"
@@ -296,6 +328,7 @@ async function resetTaskList() {
         <p v-else-if="isOverdue(selectedTask)" class="task-status task-status--overdue">Po termíne</p>
         <p v-else class="task-status task-status--open">Nedokončená</p>
 
+        <!-- Show the start and end dates with their labels. -->
         <dl class="task-dates">
           <div>
             <dt>Začiatok</dt>
@@ -307,6 +340,7 @@ async function resetTaskList() {
           </div>
         </dl>
 
+        <!-- Offer actions for the selected task. -->
         <div class="task-actions">
           <button type="button" @click="editSelectedTask">Upraviť</button>
 
@@ -334,25 +368,34 @@ async function resetTaskList() {
       </section>
 
 
-      <button
-        v-if="activeTab === 'list' && loadedStudentName"
-        type="button"
-        class = "btn-reset"
-        :disabled="loading || saving || isTaskFormOpen"
-        @click="resetTaskList"
-      >
-        Obnoviť ukážkové úlohy
-      </button>
+      <!-- Show the reset button only when a student list is loaded. -->
+      <div v-if="activeTab === 'list' && loadedStudentName">
+        <button
+          type="button"
+          class="btn-reset"
+          :disabled="loading || saving || isTaskFormOpen"
+          :aria-describedby="isTaskFormOpen ? 'reset-hint' : undefined"
+          @click="resetTaskList"
+        >
+          Obnoviť ukážkové úlohy
+        </button>
+
+        <p v-if="isTaskFormOpen" id="reset-hint" class="reset-hint">
+          Ak chcete obnoviť ukážkové úlohy, najprv úlohu uložte alebo formulár zatvorte.
+        </p>
+      </div>
 
     </section>
     
   </main>
 
+  <!-- Display project information below the workspace. -->
   <AppFooter />
 </template>
 
 <style scoped>
 
+/* Use two columns with more space for the calendar or task list. */
 .workspace {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -361,11 +404,13 @@ async function resetTaskList() {
   padding: clamp(1rem, 4vw, 3rem);
 }
 
+/* Allow both workspace columns to shrink within the grid. */
 .workspace-content,
 .workspace-panel {
   min-width: 0;
 }
 
+/* Keep the controls in a single flexible column. */
 .workspace-panel {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -376,16 +421,19 @@ async function resetTaskList() {
   border-radius: 1rem;
 }
 
+/* Allow long text to wrap in the details panel. */
 .task-details {
   overflow-wrap: anywhere;
 }
 
+/* Stack the workspace columns on narrower screens. */
 @media (max-width: 56rem) {
   .workspace {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
+/* Lay out the selected task details. */
 .task-details {
   display: grid;
   justify-items: start;
@@ -396,11 +444,13 @@ async function resetTaskList() {
   overflow-wrap: anywhere;
 }
 
+/* Set the details heading size and spacing. */
 .task-details h2 {
   margin: 0;
   font-size: 1.35rem;
 }
 
+/* Preserve line breaks entered in the task description. */
 .task-description {
   margin: 0;
   color: #57464e;
@@ -408,6 +458,7 @@ async function resetTaskList() {
   white-space: pre-wrap;
 }
 
+/* Style the status badge and its state-specific colors. */
 .task-status {
   margin: 0;
   padding: 0.25rem 0.65rem;
@@ -431,6 +482,7 @@ async function resetTaskList() {
   color: #a51d36;
 }
 
+/* Lay out date fields side by side when there is enough room. */
 .task-dates {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
@@ -449,6 +501,7 @@ async function resetTaskList() {
   margin: 0.2rem 0 0;
 }
 
+/* Let action buttons wrap on narrow screens. */
 .task-actions {
   display: flex;
   flex-wrap: wrap;
@@ -481,15 +534,18 @@ async function resetTaskList() {
   color: #a51d36;
 }
 
+/* Show a focus indicator for keyboard navigation. */
 .task-actions button:focus-visible {
   outline: 2px solid #b51766;
   outline-offset: 2px;
 }
 
+/* Visually distinguish unavailable actions. */
 .task-actions button:disabled {
   opacity: 0.6;
 }
 
+/* Style the sample-task reset button. */
 .btn-reset{
   width: 170px;
   height: 40px;
@@ -503,8 +559,20 @@ async function resetTaskList() {
   transition: all 0.8s;
 }
 
-.btn-reset:hover{
+.btn-reset:hover:not(:disabled){
   box-shadow: 0 0 10px #72123b;
+}
+
+.btn-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.reset-hint {
+  margin: 0.5rem 0 0;
+  color: #57464e;
+  font-size: 0.875rem;
 }
 
 </style>

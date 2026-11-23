@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, watch } from 'vue'
 
+// Receive the save state, the task being edited, and optional dates from the calendar.
 const props = defineProps({
   saving: Boolean,
   editingTask: {
@@ -13,8 +14,10 @@ const props = defineProps({
   },
 })
 
+// Let the parent close the form or save the validated data.
 const emit = defineEmits(['close', 'save'])
 
+// Keep a local draft so typing does not directly modify the original task.
 const task = reactive({
   title: props.editingTask?.title ?? '',
   description: props.editingTask?.description ?? '',
@@ -23,6 +26,7 @@ const task = reactive({
   is_finished: props.editingTask?.is_finished ?? false,
 })
 
+// Store a separate validation message for each field.
 const errors = reactive({
   title: '',
   description: '',
@@ -30,6 +34,7 @@ const errors = reactive({
   date_to: '',
 })
 
+// Update the dates when the user changes the calendar selection while creating a task.
 watch(
   () => props.initialTaskDates,
   (dates) => {
@@ -42,7 +47,7 @@ watch(
   },
 )
 
-
+// Convert a date to the local YYYY-MM-DDTHH:mm format required by datetime-local inputs.
 function toLocalInputValue(value) {
   if (!value) return ''
 
@@ -54,10 +59,12 @@ function toLocalInputValue(value) {
 }
 
 function submitTask() {
+  // Ignore duplicate submissions while saving.
   if (props.saving) return
 
   const title = task.title.trim()
 
+  // Clear old messages before validating the current values.
   errors.title = ''
   errors.description = ''
   errors.date_from = ''
@@ -73,6 +80,7 @@ function submitTask() {
     errors.description = 'Popis môže mať najviac 1000 znakov.'
   }
 
+  // Require both dates and check that the end is on or after the start.
   if (!task.date_from) {
     errors.date_from = 'Zadajte začiatok úlohy.'
   }
@@ -83,6 +91,7 @@ function submitTask() {
     errors.date_to = 'Koniec úlohy nesmie byť pred jej začiatkom.'
   }
 
+  // Send a copy of the draft with the trimmed title only if validation passes.
   if (Object.values(errors).some(Boolean)) return
 
   emit('save', { ...task, title })
@@ -91,10 +100,13 @@ function submitTask() {
 
 <template>
   <section aria-labelledby="task-form-title">
+
+    <!-- Use the same form for creating and editing tasks. -->
     <h2 id="task-form-title">
       {{ editingTask ? 'Upraviť úlohu' : 'Nová úloha' }}
     </h2>
 
+    <!-- Use custom validation to display messages next to the relevant fields. -->
     <form novalidate @submit.prevent="submitTask">
 
       <div class="form-field">
@@ -109,6 +121,7 @@ function submitTask() {
         <p v-if="errors.description" class="field-error" role="alert"> {{ errors.description }} </p>
       </div>
 
+      <!-- Collect the start and end dates in the user's local time. -->
       <div class="form-dates">
         <div class="form-field">
           <label for="task-start">Začiatok</label>
@@ -125,18 +138,22 @@ function submitTask() {
         </div>
       </div>
 
+      <!-- Allow the completion status to be changed when editing an existing task. -->
       <label v-if="editingTask">
         <input type="checkbox" v-model="task.is_finished">
         Dokončená
       </label>
 
+      <!-- Disable both actions while the parent is saving the task. -->
       <button type="submit" :disabled="saving" class="form-save"> {{ saving ? 'Ukladám…' : 'Uložiť' }} </button>
       <button type="button" :disabled="saving" @click="emit('close')" class="form-cancel"> Zrušiť </button>
     </form>
   </section>
 </template>
 
-<style scoped>ň
+<style scoped>
+
+/* Separate the task form from the content above it. */
 .task-form {
   min-width: 0;
   padding-top: 1rem;
@@ -153,6 +170,7 @@ function submitTask() {
   gap: 0.85rem;
 }
 
+/* Stack the label, control, and error message within each field. */
 .form-field {
   display: grid;
   gap: 0.35rem;
@@ -163,12 +181,14 @@ function submitTask() {
   font-weight: 600;
 }
 
+/* Let date columns adapt to the available width. */
 .form-dates {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
   gap: 0.75rem;
 }
 
+/* Keep controls within their columns, including padding and borders. */
 .form-field input,
 .form-field textarea {
   box-sizing: border-box;
@@ -187,6 +207,7 @@ function submitTask() {
   resize: vertical;
 }
 
+/* Make the focused field easy to identify. */
 .form-field input:focus,
 .form-field textarea:focus {
   outline: 2px solid #b51766;
@@ -194,6 +215,7 @@ function submitTask() {
   caret-color: #b51766;
 }
 
+/* Define spacing and wrapping for a form action group. */
 .form-actions {
   display: flex;
   flex-wrap: wrap;
@@ -208,6 +230,7 @@ function submitTask() {
   font-weight: 600;
 }
 
+/* Use a darker background for the primary save action. */
 .form-save {
   margin: 1rem 0.5rem;
   padding: 0.5rem 1.5rem;
@@ -221,6 +244,7 @@ function submitTask() {
   transition: all 0.3s;
 }
 
+/* Use a lighter background for the cancel action. */
 .form-cancel {
   margin: 1rem 0.5rem;
   padding: 0.5rem 1.5rem;
@@ -242,6 +266,7 @@ function submitTask() {
   box-shadow: 0 0 10px rgb(255, 233, 111);
 }
 
+/* Visually distinguish validation messages from the rest of the form. */
 .field-error {
   margin: 0;
   color: #a51d36;
